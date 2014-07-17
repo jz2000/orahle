@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<orahle-connections>
+
+    <connection>
+        <alias>oracle-dev-regi-owner</alias>
+        <url>jdbc:oracle:thin:@//oracle-dev.mycompany.com:1541/R2D2</url>
+        <user>regi_owner</user>
+        <description>ORACLE (development)</description>
+    </connection>
+
+    <connection>
+        <alias>oracle-stg-regi-owner</alias>
+        <url>jdbc:oracle:thin:@//oracle-stg.mycompany.com:1541/R2D2</url>
+        <user>regi_owner</user>
+        <description>ORACLE (staging)</description>
+    </connection>
+
+</orahle-connections>
