@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Document   : db-queries
+    Created on : 25-Nov-2013, 00:15:09
+    Author     : jz
+-->
+<jsp:root 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:jsp="http://java.sun.com/JSP/Page" 
+    version="2.0">
+
+    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
+    <jsp:useBean 
+        class="org.jz.orahle.SessionResolver" 
+        scope="request" 
+        id="sessionResolver" 
+        type="org.jz.orahle.SessionResolver"/>
+    
+    <jsp:setProperty name="sessionResolver" property="dbAlias" param="db-alias"/>
+    <jsp:setProperty name="sessionResolver" property="sessions" value="${sessionScope.activeSessions}"/>
+    <!-- any content can be specified here, e.g.: -->
+    <jsp:element name="text">
+        <jsp:attribute name="lang">EN</jsp:attribute>
+        <jsp:body>
+        <h1>Database Queries</h1>
+        
+        <form action="dbquery" method="post">
+            <input type="hidden" id="dbalias" name="dbalias" value="${sessionResolver.dbAlias}"/>  
+        <table>
+            <tr><td><button type="submit" id="commit" name="commit">Commit transaction</button></td></tr>
+            <tr><td><button type="submit" id="rollback" name="rollback">Rollback transaction</button></td></tr>
+            <tr>
+                <td><textarea id="sql" name="sql" rows="20" cols="60">select 1 from dual</textarea></td>
+            </tr>
+            <tr><td><input type="checkbox" id="retaintrans" name="retaintrans">Retain transaction</input></td></tr>
+            <tr><td><button type="submit" value="Execute" name="submit" id="submit" title="Execute">Execute</button></td></tr>
+            <tr><td><button type="reset" value="Reset" id="reset" name="reset">Reset</button></td></tr>
+        </table>
+        </form>    
+        
+        </jsp:body>
+    </jsp:element>
+
+</jsp:root>
