@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<orahle-connections>
+
+    <connection>
+        <alias>dev-regi-regi-owner</alias>
+        <url>jdbc:oracle:thin:@//rac02-vip.qprvt.nytimes.com:1526/R2DV</url>
+        <user>regi_owner</user>
+        <description>REGI (development)</description>
+    </connection>    
+    
+    <connection>
+        <alias>stg-regi-regi-owner</alias>
+        <url>jdbc:oracle:thin:@//rac02-vip.qprvt.nytimes.com:1526/R2DV</url>
+        <user>regi_owner</user>
+        <description>REGI (staging)</description>
+    </connection>    
+
+    <connection>
+        <alias>stg-sartre-2-core-owner</alias>
+        <url></url>
+        <user></user>
+        <description></description>
+    </connection>    
+    
+    <connection>
+        <alias>dev-sartre-6-core-owner</alias>
+        <url></url>
+        <user></user>
+        <description></description>
+    </connection>    
+
+    <connection>
+        <alias>dev-sartre-7-core-owner</alias>
+        <url></url>
+        <user></user>
+        <description></description>
+    </connection>    
+    
+</orahle-connections>    
