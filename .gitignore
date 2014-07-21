@@ -1,2 +1,3 @@
-conf/orahle-connections.xml
+orahle/conf/orahle-connections.xml
+orahle/target/
 target/
