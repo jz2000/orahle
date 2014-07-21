@@ -15,46 +15,43 @@
         scope="request" 
         id="sessionResolver" 
         type="org.jz.orahle.SessionResolver"/>
+    <jsp:useBean 
+        class="org.jz.orahle.DbPackage" 
+        scope="request" 
+        id="dbPackage" 
+        type="org.jz.orahle.DbPackage"/>
     
     <jsp:setProperty name="sessionResolver" property="dbAlias" param="db-alias"/>
     <jsp:setProperty name="sessionResolver" property="dbOwner" param="db-owner"/>
     <jsp:setProperty name="sessionResolver" property="dbObjectType" param="db-obj-type"/>
     <jsp:setProperty name="sessionResolver" property="dbObjectNameFilter" param="db-obj-name-filter"/>
     <jsp:setProperty name="sessionResolver" property="sessions" value="${sessionScope.activeSessions}"/>
+
+    <jsp:setProperty name="dbPackage" property="packageName" param="package-name"/>
+    <jsp:setProperty name="dbPackage" property="dbAlias" param="db-alias"/>
+    <jsp:setProperty name="dbPackage" property="dbOwner" param="db-owner"/>
+    <jsp:setProperty name="dbPackage" property="dbObjectType" param="db-obj-type"/>
+    <jsp:setProperty name="dbPackage" property="dbObjectNameFilter" param="db-obj-name-filter"/>
+    <jsp:setProperty name="dbPackage" property="sessions" value="${sessionScope.activeSessions}"/>
     <!-- any content can be specified here, e.g.: -->
     <jsp:element name="crumbs">
-        <a href="/orahle/db-list.jspx">db-list</a> 
+        <a href="/orahle/db-list.jspx">db-list</a>
         -->
         <a href="/orahle/db-welcome.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}">db-schema</a> 
         -->
-        tables
+        <a href="/orahle/db-packages.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;db-obj-type=PACKAGE">packages</a> 
+        -->
+        ${dbPackage.packageName} (definition)
     </jsp:element>    
     <jsp:element name="text">
         <jsp:attribute name="lang">EN</jsp:attribute>
         <jsp:body>
-        <h1>Database Tables</h1>
-        <form method="GET">
-            Owner:
-            <input type="hidden" name="db-alias" value="${sessionResolver.dbAlias}"/>
-            <input type="hidden" name="db-obj-type" value="${sessionResolver.dbObjectType}"/>
-            <input type="text" name="db-owner" value="${sessionResolver.dbOwner}"/>
-            <input type="text" name="db-obj-name-filter" value="${sessionResolver.dbObjectNameFilter}"/>
-            <input type="submit" name="submit" value="Filter"/>
-        </form>    
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Comment</th>
-                <th></th>
-            </tr>
-            <c:forEach var="dbTable" items='${sessionResolver.tables}'>
-            <tr>
-                <td>${dbTable.name}</td>
-                <td>${dbTable.comment}</td>
-                <td><a href="db-table-summary.jspx?db-alias=${sessionResolver.dbAlias}">Open...</a></td>
-            </tr>
-            </c:forEach>
-        </table>
+
+            <h1>Database Package [${dbPackage.packageName}] (Definition)</h1>
+
+            <code>
+                ${dbPackage.packageDefinition}
+            </code>    
         
         </jsp:body>
     </jsp:element>

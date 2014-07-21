@@ -22,6 +22,8 @@
     <!-- any content can be specified here, e.g.: -->
     <jsp:element name="crumbs">
         <a href="/orahle/db-list.jspx">db-list</a>
+        -->
+        db-schema
     </jsp:element>    
     <jsp:element name="text">
         <jsp:attribute name="lang">EN</jsp:attribute>

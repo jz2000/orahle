@@ -138,5 +138,21 @@ public class DebuggingDbSession implements DbSession
     public QueryResult executeQuery(String queryText) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<String> getPackageDefinition(
+            String owner,
+            String packageName
+    ) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public List<String> getPackageBody(
+            String owner,
+            String packageName
+    ) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

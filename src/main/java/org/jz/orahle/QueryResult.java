@@ -8,13 +8,19 @@ import java.util.List;
  */
 public class QueryResult {
     
-    private String type;
+    public enum Type {
+        ROWSET,
+        COUNT,
+        ERROR,
+    }
+    
+    private Type type;
     private String textResult;
     private List<String> names;
     private List<String> types;
     private List<List<Object>> rows;
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
@@ -34,7 +40,7 @@ public class QueryResult {
         this.textResult = textResult;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 

@@ -14,17 +14,15 @@ public class DatabaseServiceDebugImpl implements DatabaseService
 {
     
     private List<DbObjectType> knownObjectTypes = Arrays.asList(
-            new DbObjectType("Query", "QUERY", "db-queries"),
-            new DbObjectType("Table", "TABLE", "db-tables"),
-            new DbObjectType("View", "VIEW", "db-views"),
-            new DbObjectType("Sequence", "SEQUENCE", "db-sequences"),
-            new DbObjectType("Procedure", "PROCEDURE", "db-procedures"),
-            new DbObjectType("Function", "FUNCTION", "db-functions"),
-            new DbObjectType("Package", "PACKAGE", "db-packages"),
-            new DbObjectType("Package Body", "PACKAGE_BODY", "db-package-bodies"),
-            new DbObjectType("Index", "INDEX", "db-indexes"),
-            new DbObjectType("Constraint", "CONSTRAINT", "db-constraints"),
-            new DbObjectType("Any", "%", "db-objects"));
+            new DbObjectType("Tables", "TABLE", "db-tables"),
+            new DbObjectType("Views", "VIEW", "db-views"),
+            new DbObjectType("Sequences", "SEQUENCE", "db-sequences"),
+            new DbObjectType("Procedures", "PROCEDURE", "db-procedures"),
+            new DbObjectType("Functions", "FUNCTION", "db-functions"),
+            new DbObjectType("Packages", "PACKAGE", "db-packages"),
+            new DbObjectType("Package Bodies", "PACKAGE_BODY", "db-package-bodies"),
+            new DbObjectType("Indexes", "INDEX", "db-indexes")
+    );
 
     public DatabaseServiceDebugImpl()
     {

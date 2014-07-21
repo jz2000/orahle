@@ -2,6 +2,7 @@ package org.jz.orahle;
 
 
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -29,4 +30,12 @@ public interface DbSession
     
     public QueryResult executeQuery(
             String queryText) throws Exception;
+
+    public List<String> getPackageDefinition(
+            String owner,
+            String packageName) throws SQLException ;
+
+    public List<String> getPackageBody(
+            String owner,
+            String packageName) throws SQLException ;
 }

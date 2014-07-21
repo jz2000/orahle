@@ -24,10 +24,13 @@ public class QueryRunner extends SessionResolver
     
     public String getQueryResult() throws Exception
     {
-        if (this.queryText == null || "".equals(this.queryText)) {
+        if (this.queryText == null || "".equals(this.queryText)) 
+        {
             return "No Query";
         }
         QueryResult result = this.getDbSession().executeQuery(this.queryText);
+        if (result.getType() == QueryResult.Type.ROWSET) 
+        {
         StringBuilder sb = new StringBuilder();
         sb.append("<table border>");
         sb.append("<tr>");
@@ -51,6 +54,19 @@ public class QueryRunner extends SessionResolver
         }
         sb.append("</table>");
         return sb.toString();
+        }
+        else if (result.getType() == QueryResult.Type.COUNT) 
+        {
+            return "RESULT: " + result.getTextResult();
+        } 
+        else if (result.getType() == QueryResult.Type.ERROR) 
+        {
+            return "<font color='red'>ERROR: " + result.getTextResult() + "</font>";
+        } 
+        else 
+        {
+            return "<font color='gray'>NO QUERY</font>";
+        }
     }
     
 }

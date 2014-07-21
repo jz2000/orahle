@@ -7,6 +7,18 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
 
     <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
+    <jsp:useBean 
+        class="org.jz.orahle.DbLogin" 
+        scope="request" 
+        id="dbLogin" 
+        type="org.jz.orahle.DbLogin"/>
+    <jsp:useBean 
+        class="org.jz.orahle.ConnectionServiceImpl" 
+        scope="session" 
+        id="connectionList" 
+        type="org.jz.orahle.ConnectionServiceImpl"/>
+    <jsp:setProperty name="dbLogin" property="dbAlias" param="db-alias"/>
+    <jsp:setProperty name="dbLogin" property="connectionList" value="${connectionList}"/>
 
     <!-- TODO: HOW TO PASS a parameter from query string to hidden field -->
     
@@ -20,9 +32,10 @@
             <h1>Database Connect</h1>
             
             <form action="dbconnect" method="post">
-                <input type="hidden" id="dbalias" name="dbalias" value="dev-regi-regi-owner"/>  
+                <input type="hidden" id="dbalias" name="dbalias" value="${dbLogin.dbAlias}"/>  
+                <input type="hidden" id="username" name="username" value="${dbLogin.dbUserName}"/>  
                 <table>
-                    <tr><td><input type="text" id="username" name="username"/></td></tr>
+                    <tr><td><input type="text" id="username-display" name="username-display" value="${dbLogin.dbUserName}" disabled="true"/></td></tr>
                     <tr><td><input type="password" id="password" name="password"/></td></tr>
                     <tr><td><button type="submit" value="Connect" name="submit" id="submit" title="Connect">Connect</button></td></tr>
                     <tr><td><button type="reset" value="Reset" id="reset" name="reset">Reset</button></td></tr>

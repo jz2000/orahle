@@ -52,21 +52,22 @@ public class OracleDbSession implements DbSession
             String typeName, 
             String owner) throws SQLException
     {
-        String QUERY = "select * from ALL_TABLES where (owner = ?) order by TABLE_NAME";
+        String QUERY = "select * from ALL_OBJECTS where (OBJECT_TYPE = ?) and (OWNER = ?) order by OBJECT_NAME";
         List<DbObject> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) 
         {
             try (CallableStatement stmt = connection.prepareCall(QUERY)) 
             {
-                stmt.setString(1, owner.toUpperCase());
+                stmt.setString(1, typeName.toUpperCase());
+                stmt.setString(2, owner.toUpperCase());
                 try (ResultSet rs = stmt.executeQuery())
                 {
                     while (rs.next()) 
                     {
                         DbObject object = new DbObject();
-                        object.setType("TABLE");
+                        object.setType(typeName);
                         object.setOwner(rs.getString("owner"));
-                        object.setName(rs.getString("table_name"));
+                        object.setName(rs.getString("object_name"));
                         object.setComment("Just read");
                         result.add(object);
                     }
@@ -88,22 +89,23 @@ public class OracleDbSession implements DbSession
         }
         else 
         {
-            String QUERY = "select * from ALL_TABLES where (owner = ?) and (table_name like ?) order by TABLE_NAME";
+            String QUERY = "select * from ALL_OBJECTS where (OBJECT_TYPE = ?) and (OWNER = ?) and (OBJECT_NAME like ?) order by OBJECT_NAME";
             List<DbObject> result = new ArrayList<>();
             try (Connection connection = dataSource.getConnection()) 
             {
                 try (CallableStatement stmt = connection.prepareCall(QUERY)) 
                 {
-                    stmt.setString(1, owner.toUpperCase());
-                    stmt.setString(2, keyword.toUpperCase());
+                    stmt.setString(1, typeName.toUpperCase());
+                    stmt.setString(2, owner.toUpperCase());
+                    stmt.setString(3, keyword.toUpperCase());
                     try (ResultSet rs = stmt.executeQuery())
                     {
                         while (rs.next()) 
                         {
                             DbObject object = new DbObject();
-                            object.setType("TABLE");
+                            object.setType(typeName);
                             object.setOwner(rs.getString("owner"));
-                            object.setName(rs.getString("table_name"));
+                            object.setName(rs.getString("object_name"));
                             object.setComment("Just read");
                             result.add(object);
                         }
@@ -137,7 +139,7 @@ public class OracleDbSession implements DbSession
                         try (ResultSet rs = stmt.getResultSet())
                         {
                             QueryResult result = new QueryResult();
-                            result.setType("ROWSET");
+                            result.setType(QueryResult.Type.ROWSET);
                             List<String> names = new ArrayList<>();
                             List<String> types = new ArrayList<>();
                             List<List<Object>> data = new ArrayList<>();
@@ -165,12 +167,71 @@ public class OracleDbSession implements DbSession
                     {
                         int updateCount = stmt.getUpdateCount();
                         QueryResult result = new QueryResult();
-                        result.setType("UPDATE");
+                        result.setType(QueryResult.Type.COUNT);
                         result.setTextResult(updateCount + " row(s) updated");
                         return result;
                     }
+                } 
+                catch(SQLException ex) 
+                {
+                    QueryResult result = new QueryResult();
+                    result.setType(QueryResult.Type.ERROR);
+                    result.setTextResult(ex.getErrorCode() + " " + ex.getSQLState() + " " + ex.getMessage());
+                    return result;
                 }
             }
+    }
+
+    @Override
+    public List<String> getPackageBody(
+            String owner,
+            String packageName
+    ) throws SQLException {
+        List<String> result = new ArrayList<>();
+        String sql = "select * from ALL_SOURCE where (TYPE = 'PACKAGE BODY') and (OWNER = ?) and (NAME = ?) order by LINE";
+        try (Connection connection = dataSource.getConnection()) 
+        {
+            try (CallableStatement stmt = connection.prepareCall(sql)) 
+            {
+                stmt.setString(1, owner.toUpperCase());
+                stmt.setString(2, packageName.toUpperCase());
+                try (ResultSet rs = stmt.executeQuery())
+                {
+                    while (rs.next()) 
+                    {
+                        String sourceLine = rs.getString("TEXT");
+                        result.add(sourceLine);
+                    }
+                    return result;
+                }
+            } 
+        }
+    }
+
+    @Override
+    public List<String> getPackageDefinition(
+            String owner,
+            String packageName
+    ) throws SQLException {
+        List<String> result = new ArrayList<>();
+        String sql = "select * from ALL_SOURCE where (TYPE = 'PACKAGE') and (OWNER = ?) and (NAME = ?) order by LINE";
+        try (Connection connection = dataSource.getConnection()) 
+        {
+            try (CallableStatement stmt = connection.prepareCall(sql)) 
+            {
+                stmt.setString(1, owner.toUpperCase());
+                stmt.setString(2, packageName.toUpperCase());
+                try (ResultSet rs = stmt.executeQuery())
+                {
+                    while (rs.next()) 
+                    {
+                        String sourceLine = rs.getString("TEXT");
+                        result.add(sourceLine);
+                    }
+                    return result;
+                }
+            } 
+        }
     }
 
 }

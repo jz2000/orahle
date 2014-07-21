@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-    Document   : db-query
-    Created on : 07-Jul-2014
+    Document   : db-tables
+    Created on : 25-Nov-2013, 00:15:09
     Author     : jz
 -->
 <jsp:root 
@@ -15,46 +15,47 @@
         scope="request" 
         id="sessionResolver" 
         type="org.jz.orahle.SessionResolver"/>
-    <jsp:useBean 
-        class="org.jz.orahle.QueryRunner" 
-        scope="request" 
-        id="queryRunner" 
-        type="org.jz.orahle.QueryRunner"/>
     
     <jsp:setProperty name="sessionResolver" property="dbAlias" param="db-alias"/>
     <jsp:setProperty name="sessionResolver" property="dbOwner" param="db-owner"/>
+    <jsp:setProperty name="sessionResolver" property="dbObjectType" param="db-obj-type"/>
+    <jsp:setProperty name="sessionResolver" property="dbObjectNameFilter" param="db-obj-name-filter"/>
     <jsp:setProperty name="sessionResolver" property="sessions" value="${sessionScope.activeSessions}"/>
-
-    <jsp:setProperty name="queryRunner" property="dbAlias" param="db-alias"/>
-    <jsp:setProperty name="queryRunner" property="dbOwner" param="db-owner"/>
-    <jsp:setProperty name="queryRunner" property="sessions" value="${sessionScope.activeSessions}"/>
-    <jsp:setProperty name="queryRunner" property="queryText" param="db-query"/>
     <!-- any content can be specified here, e.g.: -->
     <jsp:element name="crumbs">
         <a href="/orahle/db-list.jspx">db-list</a>
         -->
         <a href="/orahle/db-welcome.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}">db-schema</a> 
         -->
-        query
+        views
     </jsp:element>    
     <jsp:element name="text">
         <jsp:attribute name="lang">EN</jsp:attribute>
         <jsp:body>
-        <h1>Compose Query</h1>
-        <form method="POST">
+        <h1>Database Views</h1>
+        <form method="GET">
+            Owner:
             <input type="hidden" name="db-alias" value="${sessionResolver.dbAlias}"/>
             <input type="hidden" name="db-obj-type" value="${sessionResolver.dbObjectType}"/>
-            Owner: 
             <input type="text" name="db-owner" value="${sessionResolver.dbOwner}"/>
-            <br/>
-            Query: 
-            <textarea type="textArea" name="db-query" rows="40" cols="80" value="XXX">${queryRunner.queryText}</textarea>
-            <br/>
-            <input type="submit" name="submit" value="Run"/>
-        </form>   
-        <div>
-            ${queryRunner.queryResult}
-        </div>    
+            <input type="text" name="db-obj-name-filter" value="${sessionResolver.dbObjectNameFilter}"/>
+            <input type="submit" name="submit" value="Filter"/>
+        </form>    
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Comment</th>
+                <th></th>
+            </tr>
+            <c:forEach var="dbTable" items='${sessionResolver.tables}'>
+            <tr>
+                <td>${dbTable.name}</td>
+                <td>${dbTable.comment}</td>
+                <td><a href="db-view-summary.jspx?db-alias=${sessionResolver.dbAlias}">Open...</a></td>
+            </tr>
+            </c:forEach>
+        </table>
+        
         </jsp:body>
     </jsp:element>
 
