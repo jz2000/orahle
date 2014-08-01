@@ -27,12 +27,12 @@
         -->
         <a href="/orahle/db-welcome.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}">db-schema</a> 
         -->
-        procedures
+        triggers
     </jsp:element>    
     <jsp:element name="text">
         <jsp:attribute name="lang">EN</jsp:attribute>
         <jsp:body>
-        <h1>Database Stored Procedures</h1>
+        <h1>Database Triggers</h1>
         <form method="GET">
             Owner:
             <input type="hidden" name="db-alias" value="${sessionResolver.dbAlias}"/>
@@ -47,11 +47,11 @@
                 <th>Comment</th>
                 <th></th>
             </tr>
-            <c:forEach var="dbProcedure" items='${sessionResolver.tables}'>
+            <c:forEach var="dbTrigger" items='${sessionResolver.tables}'>
             <tr>
-                <td>${dbProcedure.name}</td>
-                <td>${dbProcedure.comment}</td>
-                <td><a href="db-procedure.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;procedure-name=${dbProcedure.name}">Open...</a></td>
+                <td>${dbTrigger.name}</td>
+                <td>${dbTrigger.comment}</td>
+                <td><a href="db-trigger.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;trigger-name=${dbTrigger.name}">Open...</a></td>
             </tr>
             </c:forEach>
         </table>

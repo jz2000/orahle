@@ -18,7 +18,7 @@
     
     <jsp:setProperty name="sessionResolver" property="dbAlias" param="db-alias"/>
     <jsp:setProperty name="sessionResolver" property="dbOwner" param="db-owner"/>
-    <jsp:setProperty name="sessionResolver" property="dbObjectType" param="db-obj-type"/>
+    <jsp:setProperty name="sessionResolver" property="dbObjectType" value="TYPE BODY"/>
     <jsp:setProperty name="sessionResolver" property="dbObjectNameFilter" param="db-obj-name-filter"/>
     <jsp:setProperty name="sessionResolver" property="sessions" value="${sessionScope.activeSessions}"/>
     <!-- any content can be specified here, e.g.: -->
@@ -27,12 +27,12 @@
         -->
         <a href="/orahle/db-welcome.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}">db-schema</a> 
         -->
-        procedures
+        type bodies
     </jsp:element>    
     <jsp:element name="text">
         <jsp:attribute name="lang">EN</jsp:attribute>
         <jsp:body>
-        <h1>Database Stored Procedures</h1>
+        <h1>Database Type Bodies</h1>
         <form method="GET">
             Owner:
             <input type="hidden" name="db-alias" value="${sessionResolver.dbAlias}"/>
@@ -47,11 +47,13 @@
                 <th>Comment</th>
                 <th></th>
             </tr>
-            <c:forEach var="dbProcedure" items='${sessionResolver.tables}'>
+            <c:forEach var="dbType" items='${sessionResolver.tables}'>
             <tr>
-                <td>${dbProcedure.name}</td>
-                <td>${dbProcedure.comment}</td>
-                <td><a href="db-procedure.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;procedure-name=${dbProcedure.name}">Open...</a></td>
+                <td>${dbType.name}</td>
+                <td>${dbType.comment}</td>
+                <td><a href="db-type-definition.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;type-name=${dbType.name}">Definition....</a></td>
+                <td>|</td>
+                <td><a href="db-type-body.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;type-name=${dbType.name}">Body....</a></td>
             </tr>
             </c:forEach>
         </table>

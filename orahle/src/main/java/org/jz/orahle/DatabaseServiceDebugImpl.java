@@ -19,8 +19,11 @@ public class DatabaseServiceDebugImpl implements DatabaseService
             new DbObjectType("Sequences", "SEQUENCE", "db-sequences"),
             new DbObjectType("Procedures", "PROCEDURE", "db-procedures"),
             new DbObjectType("Functions", "FUNCTION", "db-functions"),
+            new DbObjectType("Triggers", "TRIGGER", "db-triggers"),
             new DbObjectType("Packages", "PACKAGE", "db-packages"),
             new DbObjectType("Package Bodies", "PACKAGE_BODY", "db-package-bodies"),
+            new DbObjectType("Types", "TYPE", "db-types"),
+            new DbObjectType("Type Bodies", "TYPE_BODY", "db-type-bodies"),
             new DbObjectType("Indexes", "INDEX", "db-indexes")
     );
 

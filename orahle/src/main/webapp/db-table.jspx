@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Document   : db-tables
+    Created on : 25-Nov-2013, 00:15:09
+    Author     : jz
+-->
+<jsp:root 
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:jsp="http://java.sun.com/JSP/Page" 
+    version="2.0">
+
+    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
+    <jsp:useBean 
+        class="org.jz.orahle.SessionResolver" 
+        scope="request" 
+        id="sessionResolver" 
+        type="org.jz.orahle.SessionResolver"/>
+    <jsp:useBean 
+        class="org.jz.orahle.DbTable" 
+        scope="request" 
+        id="dbTable" 
+        type="org.jz.orahle.DbTable"/>
+    
+    <jsp:setProperty name="sessionResolver" property="dbAlias" param="db-alias"/>
+    <jsp:setProperty name="sessionResolver" property="dbOwner" param="db-owner"/>
+    <jsp:setProperty name="sessionResolver" property="dbObjectType" param="db-obj-type"/>
+    <jsp:setProperty name="sessionResolver" property="dbObjectNameFilter" param="db-obj-name-filter"/>
+    <jsp:setProperty name="sessionResolver" property="sessions" value="${sessionScope.activeSessions}"/>
+
+    <jsp:setProperty name="dbTable" property="tableName" param="table-name"/>
+    <jsp:setProperty name="dbTable" property="dbAlias" param="db-alias"/>
+    <jsp:setProperty name="dbTable" property="dbOwner" param="db-owner"/>
+    <jsp:setProperty name="dbTable" property="dbObjectType" param="db-obj-type"/>
+    <jsp:setProperty name="dbTable" property="dbObjectNameFilter" param="db-obj-name-filter"/>
+    <jsp:setProperty name="dbTable" property="sessions" value="${sessionScope.activeSessions}"/>
+    <!-- any content can be specified here, e.g.: -->
+    <jsp:element name="crumbs">
+        <a href="/orahle/db-list.jspx">db-list</a>
+        -->
+        <a href="/orahle/db-welcome.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}">db-schema</a> 
+        -->
+        <a href="/orahle/db-tables.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;db-obj-type=TABLE">tables</a> 
+        -->
+        ${dbTable.tableName}
+    </jsp:element>    
+    <jsp:element name="text">
+        <jsp:attribute name="lang">EN</jsp:attribute>
+        <jsp:body>
+
+            <h1>Database Table [${dbTable.tableName}]</h1>
+
+            <h2>Columns:</h2>
+            <table border="true">
+                <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Size</th>
+                <th>Nullable</th>
+                <th>Comment</th>
+                </tr>
+            <c:forEach var="dbTableColumn" items='${dbTable.columns}'>
+            <tr>
+                <td>${dbTableColumn.id}</td>
+                <td>${dbTableColumn.name}</td>
+                <td>${dbTableColumn.dataType}</td>
+                <td>${dbTableColumn.size}</td>
+                <td>${dbTableColumn.nullable}</td>
+                <td>${dbTableColumn.comment}</td>
+            </tr>
+            </c:forEach>
+            </table>
+            
+            <h2>Indexes:</h2>
+            <table border="true">
+                <tr>
+                <th>Name</th>
+                </tr>
+            <c:forEach var="dbTableIndex" items='${dbTable.indexes}'>
+            <tr>
+                <td>${dbTableIndex.name}</td>
+            </tr>
+            </c:forEach>
+            </table>
+            
+            
+            <h2>Constraints:</h2>
+            <table border="true">
+                <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Search Condition</th>
+                <th>Reference Owner</th>
+                <th>Reference Constraint Name</th>
+                <th>Delete Rule</th>
+                <th>Status</th>
+                <th>Generated</th>
+                <th>Index Owner</th>
+                <th>Index Name</th>
+                </tr>
+            <c:forEach var="dbTableConstraint" items='${dbTable.constraints}'>
+            <tr>
+                <td>${dbTableConstraint.name}</td>
+                <td>${dbTableConstraint.constraintType}</td>
+                <td>${dbTableConstraint.searchCondition}</td>
+                <td>${dbTableConstraint.refOwner}</td>
+                <td>${dbTableConstraint.refConstrantName}</td>
+                <td>${dbTableConstraint.deleteRule}</td>
+                <td>${dbTableConstraint.status}</td>
+                <td>${dbTableConstraint.generated}</td>
+                <td>${dbTableConstraint.idxOwner}</td>
+                <td>${dbTableConstraint.idxName}</td>
+            </tr>
+            </c:forEach>
+            </table>
+            
+            <h2>Rows (by statistics): ${dbTable.definition.rowCount}</h2>
+            
+        
+        </jsp:body>
+    </jsp:element>
+
+</jsp:root>

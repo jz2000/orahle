@@ -47,11 +47,13 @@
                 <th>Comment</th>
                 <th></th>
             </tr>
-            <c:forEach var="dbTable" items='${sessionResolver.tables}'>
+            <c:forEach var="dbPackage" items='${sessionResolver.tables}'>
             <tr>
-                <td>${dbTable.name}</td>
-                <td>${dbTable.comment}</td>
-                <td><a href="db-view-summary.jspx?db-alias=${sessionResolver.dbAlias}">Open...</a></td>
+                <td>${dbPackage.name}</td>
+                <td>${dbPackage.comment}</td>
+                <td><a href="db-package-definition.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;package-name=${dbPackage.name}">Definition....</a></td>
+                <td>|</td>
+                <td><a href="db-package-body.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;package-name=${dbPackage.name}">Body....</a></td>
             </tr>
             </c:forEach>
         </table>

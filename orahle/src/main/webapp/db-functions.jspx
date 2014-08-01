@@ -47,11 +47,11 @@
                 <th>Comment</th>
                 <th></th>
             </tr>
-            <c:forEach var="dbTable" items='${sessionResolver.tables}'>
+            <c:forEach var="dbFunction" items='${sessionResolver.tables}'>
             <tr>
-                <td>${dbTable.name}</td>
-                <td>${dbTable.comment}</td>
-                <td><a href="db-view-summary.jspx?db-alias=${sessionResolver.dbAlias}">Open...</a></td>
+                <td>${dbFunction.name}</td>
+                <td>${dbFunction.comment}</td>
+                <td><a href="db-function.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;function-name=${dbFunction.name}">Open...</a></td>
             </tr>
             </c:forEach>
         </table>

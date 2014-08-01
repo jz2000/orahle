@@ -22,6 +22,7 @@
     <jsp:setProperty name="sessionResolver" property="dbObjectNameFilter" param="db-obj-name-filter"/>
     <jsp:setProperty name="sessionResolver" property="sessions" value="${sessionScope.activeSessions}"/>
     <!-- any content can be specified here, e.g.: -->
+    <header>Orahle</header>
     <jsp:element name="crumbs">
         <a href="/orahle/db-list.jspx">db-list</a> 
         -->
@@ -51,7 +52,7 @@
             <tr>
                 <td>${dbTable.name}</td>
                 <td>${dbTable.comment}</td>
-                <td><a href="db-table-summary.jspx?db-alias=${sessionResolver.dbAlias}">Open...</a></td>
+                <td><a href="db-table.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;table-name=${dbTable.name}">Open...</a></td>
             </tr>
             </c:forEach>
         </table>

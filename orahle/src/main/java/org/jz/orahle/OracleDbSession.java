@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.dbcp.BasicDataSource;
@@ -183,6 +184,162 @@ public class OracleDbSession implements DbSession
     }
 
     @Override
+    public List<String> getViewBody(
+            String owner,
+            String viewName
+    ) throws SQLException {
+        List<String> result = new ArrayList<>();
+        String sql = "select * from ALL_VIEWS where (OWNER = ?) and (VIEW_NAME = ?)";
+        try (Connection connection = dataSource.getConnection()) 
+        {
+            try (CallableStatement stmt = connection.prepareCall(sql)) 
+            {
+                stmt.setString(1, owner.toUpperCase());
+                stmt.setString(2, viewName.toUpperCase());
+                try (ResultSet rs = stmt.executeQuery())
+                {
+                    while (rs.next()) 
+                    {
+                        String sourceLine = rs.getString("TEXT");
+                        result.add(sourceLine);
+                    }
+                    return result;
+                }
+            } 
+        }
+    }
+
+    @Override
+    public List<String> getProcedureBody(
+            String owner,
+            String procedureName
+    ) throws SQLException {
+        List<String> result = new ArrayList<>();
+        String sql = "select * from ALL_SOURCE where (TYPE = 'PROCEDURE') and (OWNER = ?) and (NAME = ?) order by LINE";
+        try (Connection connection = dataSource.getConnection()) 
+        {
+            try (CallableStatement stmt = connection.prepareCall(sql)) 
+            {
+                stmt.setString(1, owner.toUpperCase());
+                stmt.setString(2, procedureName.toUpperCase());
+                try (ResultSet rs = stmt.executeQuery())
+                {
+                    while (rs.next()) 
+                    {
+                        String sourceLine = rs.getString("TEXT");
+                        result.add(sourceLine);
+                    }
+                    return result;
+                }
+            } 
+        }
+    }
+
+    @Override
+    public List<String> getFunctionBody(
+            String owner,
+            String functionName
+    ) throws SQLException {
+        List<String> result = new ArrayList<>();
+        String sql = "select * from ALL_SOURCE where (TYPE = 'FUNCTION') and (OWNER = ?) and (NAME = ?) order by LINE";
+        try (Connection connection = dataSource.getConnection()) 
+        {
+            try (CallableStatement stmt = connection.prepareCall(sql)) 
+            {
+                stmt.setString(1, owner.toUpperCase());
+                stmt.setString(2, functionName.toUpperCase());
+                try (ResultSet rs = stmt.executeQuery())
+                {
+                    while (rs.next()) 
+                    {
+                        String sourceLine = rs.getString("TEXT");
+                        result.add(sourceLine);
+                    }
+                    return result;
+                }
+            } 
+        }
+    }
+
+    @Override
+    public List<String> getTriggerBody(
+            String owner,
+            String triggerName
+    ) throws SQLException {
+        List<String> result = new ArrayList<>();
+        String sql = "select * from ALL_SOURCE where (TYPE = 'TRIGGER') and (OWNER = ?) and (NAME = ?) order by LINE";
+        try (Connection connection = dataSource.getConnection()) 
+        {
+            try (CallableStatement stmt = connection.prepareCall(sql)) 
+            {
+                stmt.setString(1, owner.toUpperCase());
+                stmt.setString(2, triggerName.toUpperCase());
+                try (ResultSet rs = stmt.executeQuery())
+                {
+                    while (rs.next()) 
+                    {
+                        String sourceLine = rs.getString("TEXT");
+                        result.add(sourceLine);
+                    }
+                    return result;
+                }
+            } 
+        }
+    }
+
+    @Override
+    public List<String> getTypeDefinition(
+            String owner,
+            String typeName
+    ) throws SQLException {
+        List<String> result = new ArrayList<>();
+        String sql = "select * from ALL_SOURCE where (TYPE = 'TYPE') and (OWNER = ?) and (NAME = ?) order by LINE";
+        try (Connection connection = dataSource.getConnection()) 
+        {
+            try (CallableStatement stmt = connection.prepareCall(sql)) 
+            {
+                stmt.setString(1, owner.toUpperCase());
+                stmt.setString(2, typeName.toUpperCase());
+                try (ResultSet rs = stmt.executeQuery())
+                {
+                    while (rs.next()) 
+                    {
+                        String sourceLine = rs.getString("TEXT");
+                        result.add(sourceLine);
+                    }
+                    return result;
+                }
+            } 
+        }
+    }
+
+    @Override
+    public List<String> getTypeBody(
+            String owner,
+            String packageName
+    ) throws SQLException {
+        List<String> result = new ArrayList<>();
+        String sql = "select * from ALL_SOURCE where (TYPE = 'TYPE BODY') and (OWNER = ?) and (NAME = ?) order by LINE";
+        try (Connection connection = dataSource.getConnection()) 
+        {
+            try (CallableStatement stmt = connection.prepareCall(sql)) 
+            {
+                stmt.setString(1, owner.toUpperCase());
+                stmt.setString(2, packageName.toUpperCase());
+                try (ResultSet rs = stmt.executeQuery())
+                {
+                    while (rs.next()) 
+                    {
+                        String sourceLine = rs.getString("TEXT");
+                        result.add(sourceLine);
+                    }
+                    return result;
+                }
+            } 
+        }
+    }
+
+    @Override
     public List<String> getPackageBody(
             String owner,
             String packageName
@@ -232,6 +389,156 @@ public class OracleDbSession implements DbSession
                 }
             } 
         }
+    }
+    
+    @Override
+    public DbTableDefinition getTableDefinition(
+            String owner, 
+            String tableName) throws SQLException 
+    {
+        String sql = "select * "
+                + "from ALL_TABLES at "
+                + "inner join ALL_TAB_COMMENTS atc on ((atc.OWNER = at.OWNER) and (atc.TABLE_NAME = at.TABLE_NAME)) "
+                + "where "
+                + "(at.OWNER = ?) "
+                + "and "
+                + "(at.TABLE_NAME = ?)";
+        try (Connection connection = dataSource.getConnection()) 
+        {
+            try (CallableStatement stmt = connection.prepareCall(sql)) 
+            {
+                stmt.setString(1, owner.toUpperCase());
+                stmt.setString(2, tableName.toUpperCase());
+                try (ResultSet rs = stmt.executeQuery())
+                {
+                    if (rs.next()) 
+                    {
+                        DbTableDefinition result = new DbTableDefinition();
+                        result.setRowCount(rs.getInt("NUM_ROWS"));
+                        return result;
+                    } else {
+                        throw new SQLException("Cannot read the table definition");
+                    }
+                    
+                }
+            } 
+        }
+    }
+
+    @Override
+    public List<DbTableColumn> getTableColumns(
+            String owner, 
+            String tableName) throws SQLException 
+    {
+        List<DbTableColumn> result = new ArrayList<>();
+        String sql = "select * "
+                + "from ALL_TAB_COLS atc "
+                + "inner join ALL_COL_COMMENTS acc on ((atc.OWNER = acc.OWNER) and (atc.TABLE_NAME = acc.TABLE_NAME) and (atc.COLUMN_NAME = acc.COLUMN_NAME))"
+                + " where "
+                + "(atc.OWNER = ?) "
+                + "and "
+                + "(atc.TABLE_NAME = ?) "
+                + "order by "
+                + "atc.COLUMN_ID";
+        try (Connection connection = dataSource.getConnection()) 
+        {
+            try (CallableStatement stmt = connection.prepareCall(sql)) 
+            {
+                stmt.setString(1, owner.toUpperCase());
+                stmt.setString(2, tableName.toUpperCase());
+                try (ResultSet rs = stmt.executeQuery())
+                {
+                    while (rs.next()) 
+                    {
+                        DbTableColumn column = new DbTableColumn();
+                        column.setId(rs.getLong("COLUMN_ID"));
+                        column.setName(rs.getString("COLUMN_NAME"));
+                        column.setComment(rs.getString("COMMENTS"));
+                        column.setDataType(rs.getString("DATA_TYPE"));
+                        column.setDataLength(rs.getInt("DATA_LENGTH"));
+                        column.setDataPrecision(rs.getInt("DATA_PRECISION"));
+                        column.setDataScale(rs.getInt("DATA_SCALE"));
+                        column.setNullable(rs.getString("NULLABLE"));
+                        //column.setDataDefault(rs.getObject("DATA_DEFAULT") + "");
+                        result.add(column);
+                    }
+                    return result;
+                }
+            } 
+        }
+    }
+
+    @Override
+    public List<DbTableIndex> getTableIndexes(
+            String owner, 
+            String tableName) throws SQLException 
+    {
+        List<DbTableIndex> result = new ArrayList<>();
+        String sql = "select * from ALL_INDEXES where (OWNER = ?) and (TABLE_NAME = ?)";
+        try (Connection connection = dataSource.getConnection()) 
+        {
+            try (CallableStatement stmt = connection.prepareCall(sql)) 
+            {
+                stmt.setString(1, owner.toUpperCase());
+                stmt.setString(2, tableName.toUpperCase());
+                try (ResultSet rs = stmt.executeQuery())
+                {
+                    while (rs.next()) 
+                    {
+                        DbTableIndex index = new DbTableIndex();
+                        index.setName(rs.getString("INDEX_NAME"));
+                        index.setIndexType(rs.getString("INDEX_TYPE"));
+                        index.setUniqueness(rs.getString("UNIQUENESS"));
+                        result.add(index);
+                    }
+                    return result;
+                }
+            } 
+        }
+    }
+
+    @Override
+    public List<DbTableConstraint> getTableConstraints(
+            String owner, 
+            String tableName) throws SQLException 
+    {
+        List<DbTableConstraint> result = new ArrayList<>();
+        String sql = "select * from ALL_CONSTRAINTS where (OWNER = ?) and (TABLE_NAME = ?)";
+        try (Connection connection = dataSource.getConnection()) 
+        {
+            try (CallableStatement stmt = connection.prepareCall(sql)) 
+            {
+                stmt.setString(1, owner.toUpperCase());
+                stmt.setString(2, tableName.toUpperCase());
+                try (ResultSet rs = stmt.executeQuery())
+                {
+                    while (rs.next()) 
+                    {
+                        DbTableConstraint constraint = new DbTableConstraint();
+                        constraint.setName(rs.getString("CONSTRAINT_NAME"));
+                        constraint.setConstraintType(rs.getString("CONSTRAINT_TYPE"));
+                        constraint.setSearchCondition(rs.getString("SEARCH_CONDITION"));
+                        constraint.setRefOwner(rs.getString("R_OWNER"));
+                        constraint.setRefConstrantName(rs.getString("R_CONSTRAINT_NAME"));
+                        constraint.setDeleteRule(rs.getString("DELETE_RULE"));
+                        constraint.setStatus(rs.getString("STATUS"));
+                        constraint.setGenerated(rs.getString("GENERATED"));
+                        constraint.setIdxOwner(rs.getString("INDEX_OWNER"));
+                        constraint.setIdxName(rs.getString("INDEX_NAME"));
+                        result.add(constraint);
+                    }
+                    return result;
+                }
+            } 
+        }
+    }
+
+    @Override
+    public List<String> getTableSql(
+            String owner, 
+            String tableName) throws SQLException 
+    {
+        return Collections.emptyList();
     }
 
 }
