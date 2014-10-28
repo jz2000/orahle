@@ -7,18 +7,22 @@ import java.util.List;
  *
  * @author sergey.zheznyakovskiy
  */
-public class DbPackage extends SessionResolver {
+public class DbPackage extends SessionResolver 
+{
     private String packageName;
 
-    public String getPackageName() {
+    public String getPackageName() 
+    {
         return packageName;
     }
 
-    public void setPackageName(String packageName) {
+    public void setPackageName(String packageName) 
+    {
         this.packageName = packageName;
     }
 
-    public String getPackageDefinition() {
+    public String getPackageDefinition() 
+    {
         try 
         {
             List<String> source = this.getDbSession().getPackageDefinition(this.getDbOwner(), this.packageName);
@@ -31,13 +35,14 @@ public class DbPackage extends SessionResolver {
             stringBuilder.append("</pre>");
             return stringBuilder.toString();
         } 
-        catch(SQLException ex) 
+        catch (SQLException ex) 
         {
             return "<font color='red'>Error reading package definition</font>";
         }
     }
 
-    public String getPackageBody() {
+    public String getPackageBody() 
+    {
         try 
         {
             List<String> source = this.getDbSession().getPackageBody(this.getDbOwner(), this.packageName);
@@ -50,7 +55,7 @@ public class DbPackage extends SessionResolver {
             stringBuilder.append("</pre>");
             return stringBuilder.toString();
         } 
-        catch(SQLException ex) 
+        catch (SQLException ex) 
         {
             return "<font color='red'>Error reading package body</font>";
         }

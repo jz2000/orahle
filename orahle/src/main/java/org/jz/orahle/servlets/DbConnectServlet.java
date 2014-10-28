@@ -33,8 +33,9 @@ public class DbConnectServlet extends HttpServlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
+    protected void processRequest(
+            HttpServletRequest request, 
+            HttpServletResponse response) throws ServletException, IOException
     {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter())
@@ -46,13 +47,16 @@ public class DbConnectServlet extends HttpServlet
             ConnectionServiceImpl connectionService = (ConnectionServiceImpl)session.getAttribute("connectionList");
             if (connectionService == null)
             {
-                System.out.println(this.getClass().getName() + " connectionServiceIsEmpty");
+                System.out.println(
+                        this.getClass().getName() + " connectionServiceIsEmpty");
                 response.sendRedirect("db-list.jspx");
             } 
             else
             {
-                System.out.println(this.getClass().getName() + " connections : [" + connectionService.getConnections() + "]");
-                System.out.println(this.getClass().getName() + " lookingfor : [" + dbAlias + "]");
+                System.out.println(
+                        this.getClass().getName() + " connections : [" + connectionService.getConnections() + "]");
+                System.out.println(
+                        this.getClass().getName() + " lookingfor : [" + dbAlias + "]");
                 DbConnection dbConnection = connectionService.getConnections(dbAlias);
                 if (dbConnection == null)
                 {
@@ -61,8 +65,13 @@ public class DbConnectServlet extends HttpServlet
                 }
                 else
                 {
-                    DbSession dbSession = new OracleDbSession(dbAlias, dbConnection.getUrl(), userName, userPassword);
-                    Map<String, DbSession> activeSessions = (Map<String, DbSession>)session.getAttribute("activeSessions");
+                    DbSession dbSession = new OracleDbSession(
+                            dbAlias, 
+                            dbConnection.getUrl(), 
+                            userName, 
+                            userPassword);
+                    Map<String, DbSession> activeSessions = 
+                            (Map<String, DbSession>)session.getAttribute("activeSessions");
                     if (activeSessions == null)
                     {
                         activeSessions = new HashMap<>();
@@ -70,13 +79,15 @@ public class DbConnectServlet extends HttpServlet
                     }
                     activeSessions.put(dbAlias, dbSession);
                     String dbOwner = dbConnection.getUser();
-                    response.sendRedirect("db-welcome.jspx?db-alias=" + dbConnection.getAlias() + "&" + "db-owner=" + dbOwner);
+                    response.sendRedirect("db-welcome.jspx?" + 
+                            "db-alias=" + dbConnection.getAlias() + "&" + 
+                            "db-owner=" + dbOwner);
                 }
             }
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods.">
     /**
      * Handles the HTTP
      * <code>GET</code> method.
@@ -87,8 +98,9 @@ public class DbConnectServlet extends HttpServlet
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
+    protected void doGet(
+            HttpServletRequest request, 
+            HttpServletResponse response) throws ServletException, IOException
     {
         processRequest(request, response);
     }
@@ -103,8 +115,9 @@ public class DbConnectServlet extends HttpServlet
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
+    protected void doPost(
+            HttpServletRequest request, 
+            HttpServletResponse response) throws ServletException, IOException
     {
         processRequest(request, response);
     }
@@ -118,5 +131,6 @@ public class DbConnectServlet extends HttpServlet
     public String getServletInfo()
     {
         return "Short description";
-    }// </editor-fold>
+    }
+    // </editor-fold>
 }

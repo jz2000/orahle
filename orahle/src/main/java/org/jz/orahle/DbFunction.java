@@ -7,18 +7,22 @@ import java.util.List;
  *
  * @author sergey.zheznyakovskiy
  */
-public class DbFunction extends SessionResolver {
+public class DbFunction extends SessionResolver 
+{
     private String functionName;
 
-    public String getFunctionName() {
+    public String getFunctionName() 
+    {
         return functionName;
     }
 
-    public void setFunctionName(String functionName) {
+    public void setFunctionName(String functionName) 
+    {
         this.functionName = functionName;
     }
 
-    public String getFunctionBody() {
+    public String getFunctionBody() 
+    {
         try 
         {
             List<String> source = this.getDbSession().getFunctionBody(this.getDbOwner(), this.functionName);
@@ -31,7 +35,7 @@ public class DbFunction extends SessionResolver {
             stringBuilder.append("</pre>");
             return stringBuilder.toString();
         } 
-        catch(SQLException ex) 
+        catch (SQLException ex) 
         {
             return "<font color='red'>Error reading function body</font>";
         }

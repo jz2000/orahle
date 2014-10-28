@@ -8,11 +8,13 @@ public class DbTableDefinition
 {
     private int rowCount;
 
-    public int getRowCount() {
+    public int getRowCount() 
+    {
         return rowCount;
     }
 
-    public void setRowCount(int rowCount) {
+    public void setRowCount(int rowCount) 
+    {
         this.rowCount = rowCount;
     }
 }

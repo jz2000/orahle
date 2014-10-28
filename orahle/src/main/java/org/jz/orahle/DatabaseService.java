@@ -1,7 +1,5 @@
 package org.jz.orahle;
 
-
-
 import java.util.List;
 
 /**
@@ -11,6 +9,6 @@ import java.util.List;
 public interface DatabaseService
 {
 
-    public List<DbObjectType> searchObjectTypes(String keyword);
+    List<DbObjectType> searchObjectTypes(String keyword);
     
 }

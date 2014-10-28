@@ -7,18 +7,22 @@ import java.util.List;
  *
  * @author sergey.zheznyakovskiy
  */
-public class DbTrigger extends SessionResolver {
+public class DbTrigger extends SessionResolver 
+{
     private String triggerName;
 
-    public String getTriggerName() {
+    public String getTriggerName() 
+    {
         return triggerName;
     }
 
-    public void setTriggerName(String triggerName) {
+    public void setTriggerName(String triggerName) 
+    {
         this.triggerName = triggerName;
     }
 
-    public String getTriggerBody() {
+    public String getTriggerBody() 
+    {
         try 
         {
             List<String> source = this.getDbSession().getTriggerBody(this.getDbOwner(), this.triggerName);
@@ -31,7 +35,7 @@ public class DbTrigger extends SessionResolver {
             stringBuilder.append("</pre>");
             return stringBuilder.toString();
         } 
-        catch(SQLException ex) 
+        catch (SQLException ex) 
         {
             return "<font color='red'>Error reading trigger body</font>";
         }

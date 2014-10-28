@@ -7,14 +7,17 @@ import java.util.List;
  *
  * @author sergey.zheznyakovskiy
  */
-public class DbTable extends SessionResolver {
+public class DbTable extends SessionResolver 
+{
     private String tableName;
 
-    public String getTableName() {
+    public String getTableName() 
+    {
         return tableName;
     }
 
-    public void setTableName(String tableName) {
+    public void setTableName(String tableName) 
+    {
         this.tableName = tableName;
     }
     
@@ -38,11 +41,14 @@ public class DbTable extends SessionResolver {
 
     public List<DbTableConstraint> getConstraints() throws SQLException
     {
-        List<DbTableConstraint> tableConstraints = this.getDbSession().getTableConstraints(this.getDbOwner(), this.tableName);
+        List<DbTableConstraint> tableConstraints = this.getDbSession().getTableConstraints(
+                this.getDbOwner(), 
+                this.tableName);
         return tableConstraints;
     }
 
-    public String getTableSql() {
+    public String getTableSql() 
+    {
         try 
         {
             List<String> source = this.getDbSession().getTableSql(this.getDbOwner(), this.tableName);
@@ -55,7 +61,7 @@ public class DbTable extends SessionResolver {
             stringBuilder.append("</pre>");
             return stringBuilder.toString();
         } 
-        catch(SQLException ex) 
+        catch (SQLException ex) 
         {
             return "<font color='red'>Error reading tableSql</font>";
         }

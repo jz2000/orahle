@@ -1,7 +1,5 @@
 package org.jz.orahle;
 
-
-
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,7 +16,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class ConnectionServiceImpl implements Serializable {
+public class ConnectionServiceImpl implements Serializable 
+{
 
     private static final long serialVersionUID = 01L;
     
@@ -27,43 +26,44 @@ public class ConnectionServiceImpl implements Serializable {
     public ConnectionServiceImpl() throws IOException, ParserConfigurationException, SAXException 
     {
         File connectionsFile = new File(System.getProperty("orahle.connections-file", "conf/orahle-connections.xml"));
-            
-	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-	DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-	Document doc = dBuilder.parse(connectionsFile);
- 
-	//optional, but recommended
-	//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
-	doc.getDocumentElement().normalize();
-	NodeList connectionNodeList = doc.getElementsByTagName("connection");
-        for (int i = 0; i < connectionNodeList.getLength(); i++)
+
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(connectionsFile);
+
+        //optional, but recommended
+        //http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+        doc.getDocumentElement().normalize();
+        NodeList connectionNodeList = doc.getElementsByTagName("connection");
+        for (int i = 0; i < connectionNodeList.getLength(); i++) 
         {
             Node connectionNode = connectionNodeList.item(i);
-            if (connectionNode.getNodeType() == Node.ELEMENT_NODE)
+            if (connectionNode.getNodeType() == Node.ELEMENT_NODE) 
             {
                 Element connectionElement = (Element) connectionNode;
                 DbConnection dbConnection = new DbConnection();
                 /**/
                 NodeList paramsNodeList = connectionElement.getChildNodes();
-                for (int j = 0; j < paramsNodeList.getLength(); j++)
+                for (int j = 0; j < paramsNodeList.getLength(); j++) 
                 {
                     Node paramNode = paramsNodeList.item(j);
-                    if (paramNode.getNodeType() == Node.ELEMENT_NODE)
+                    if (paramNode.getNodeType() == Node.ELEMENT_NODE) 
                     {
-                        switch (paramNode.getNodeName()) {
-                            case "alias" :
+                        switch (paramNode.getNodeName()) 
+                        {
+                            case "alias":
                                 dbConnection.setAlias(paramNode.getTextContent());
                                 break;
-                            case "url" :
+                            case "url":
                                 dbConnection.setUrl(paramNode.getTextContent());
                                 break;
-                            case "user" :
+                            case "user":
                                 dbConnection.setUser(paramNode.getTextContent());
                                 break;
-                            case "description" :
+                            case "description":
                                 dbConnection.setDescription(paramNode.getTextContent());
                                 break;
-                            default :
+                            default:
                                 /* It's OK, just an unsupported field */
                                 break;
                         }
@@ -97,8 +97,10 @@ public class ConnectionServiceImpl implements Serializable {
         {
             for (DbConnection c : connectionList)
             {
-                if (c.getAlias().toLowerCase(Locale.getDefault()).contains(keyword.toLowerCase(Locale.getDefault()))
-                        || c.getUrl().toLowerCase(Locale.getDefault()).contains(keyword.toLowerCase(Locale.getDefault())))
+                String locAlias = c.getAlias().toLowerCase(Locale.getDefault());
+                String locUrl = c.getUrl().toLowerCase(Locale.getDefault());
+                String locKeyword = keyword.toLowerCase(Locale.getDefault());
+                if (locAlias.contains(locKeyword) || locUrl.contains(locKeyword))
                 {
                     result.add(c);
                 }

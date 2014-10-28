@@ -2,8 +2,6 @@ package org.jz.orahle;
 
 import java.io.Serializable;
 
-
-
 public class DbConnection implements Serializable
 {
     private static final long serialVersionUID = 01L;
@@ -58,7 +56,8 @@ public class DbConnection implements Serializable
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return alias;
     }
     

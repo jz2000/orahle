@@ -17,9 +17,15 @@ import org.jz.orahle.servlets.DbQueryServlet;
  *
  * @author sergey.zheznyakovskiy
  */
-public class JettyStarter 
+public final class JettyStarter 
 {
+    private static final int DEFAULT_PORT = 9080;
+    
     private Server server;
+    
+    private JettyStarter() 
+    {
+    }
 
     public static void main(String[] args) 
     {
@@ -34,7 +40,7 @@ public class JettyStarter
            server = new Server();
          
            ServerConnector connector = new ServerConnector(server);
-           connector.setPort(9080);
+           connector.setPort(DEFAULT_PORT);
            server.addConnector(connector);
            
            ResourceHandler staticResourceHandler = new ResourceHandler();
@@ -63,11 +69,16 @@ public class JettyStarter
            context.addServlet(DbQueryServlet.class, "/dbquery");
            context.getResource("/db-connect.jspx");
            HandlerCollection handlers = new HandlerCollection();
-           handlers.setHandlers(new Handler[] { context, staticContextHandler, new DefaultHandler() });
+           handlers.setHandlers(new Handler[] 
+           { 
+               context, 
+               staticContextHandler, 
+               new DefaultHandler() 
+           });
            server.setHandler(handlers);
            server.start();
            server.join();
-       } 
+       }
        catch (Exception e) 
        {
            e.printStackTrace();

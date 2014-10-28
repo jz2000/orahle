@@ -224,12 +224,14 @@
         </module>
         <module name="LeftCurly"> 
             <property name="severity" value="${checkstyle.javadoc.severity}" default="warning"/>
+            <property name="option" value="nl"/>
         </module>
         <module name="NeedBraces"> 
             <property name="severity" value="${checkstyle.javadoc.severity}" default="warning"/>
         </module>
         <module name="RightCurly"> 
             <property name="severity" value="${checkstyle.javadoc.severity}" default="warning"/>
+            <property name="option" value="alone"/>
         </module>
 
 

@@ -1,7 +1,5 @@
 package org.jz.orahle;
 
-
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +42,9 @@ public class DatabaseServiceDebugImpl implements DatabaseService
             List<DbObjectType> result = new ArrayList<>();
             for (DbObjectType objectType : knownObjectTypes) 
             {
-                if (objectType.getTypeLabel().toLowerCase(Locale.getDefault()).contains(keyword.toLowerCase(Locale.getDefault())))
+                String locTypeLabel = objectType.getTypeLabel().toLowerCase(Locale.getDefault());
+                String locKeyword = keyword.toLowerCase(Locale.getDefault());
+                if (locTypeLabel.contains(locKeyword))
                 {
                     result.add(objectType);
                 }

@@ -6,9 +6,11 @@ import java.util.List;
  *
  * @author sergey.zheznyakovskiy
  */
-public class QueryResult {
+public class QueryResult 
+{
     
-    public enum Type {
+    public enum Type 
+    {
         ROWSET,
         COUNT,
         ERROR,
@@ -20,43 +22,53 @@ public class QueryResult {
     private List<String> types;
     private List<List<Object>> rows;
 
-    public void setType(Type type) {
+    public void setType(Type type)
+    {
         this.type = type;
     }
 
-    public void setTypes(List<String> types) {
+    public void setTypes(List<String> types) 
+    {
         this.types = types;
     }
 
-    public void setNames(List<String> names) {
+    public void setNames(List<String> names)
+    {
         this.names = names;
     }
 
-    public void setRows(List<List<Object>> rows) {
+    public void setRows(List<List<Object>> rows) 
+    {
         this.rows = rows;
     }
 
-    public void setTextResult(String textResult) {
+    public void setTextResult(String textResult) 
+    {
         this.textResult = textResult;
     }
 
-    public Type getType() {
+    public Type getType() 
+    {
         return type;
     }
 
-    public List<String> getTypes() {
+    public List<String> getTypes() 
+    {
         return types;
     }
 
-    public List<String> getNames() {
+    public List<String> getNames()
+    {
         return names;
     }
 
-    public List<List<Object>> getRows() {
+    public List<List<Object>> getRows() 
+    {
         return rows;
     }
 
-    public String getTextResult() {
+    public String getTextResult()
+    {
         return textResult;
     }
 

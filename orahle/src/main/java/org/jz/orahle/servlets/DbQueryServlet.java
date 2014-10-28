@@ -33,8 +33,9 @@ public class DbQueryServlet extends HttpServlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
+    protected void processRequest(
+            HttpServletRequest request, 
+            HttpServletResponse response) throws ServletException, IOException
     {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter())
@@ -57,8 +58,13 @@ public class DbQueryServlet extends HttpServlet
                 }
                 else
                 {
-                    DbSession dbSession = new DebuggingDbSession(dbAlias, dbConnection.getUrl(), userName, userPassword);
-                    Map<String, DbSession> activeSessions = (Map<String, DbSession>)session.getAttribute("activeSessions");
+                    DbSession dbSession = new DebuggingDbSession(
+                            dbAlias, 
+                            dbConnection.getUrl(), 
+                            userName, 
+                            userPassword);
+                    Map<String, DbSession> activeSessions = 
+                            (Map<String, DbSession>)session.getAttribute("activeSessions");
                     if (activeSessions == null)
                     {
                         activeSessions = new HashMap<>();
@@ -71,7 +77,7 @@ public class DbQueryServlet extends HttpServlet
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods.">
     /**
      * Handles the HTTP
      * <code>GET</code> method.
@@ -82,8 +88,9 @@ public class DbQueryServlet extends HttpServlet
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
+    protected void doGet(
+            HttpServletRequest request, 
+            HttpServletResponse response) throws ServletException, IOException
     {
         processRequest(request, response);
     }
@@ -98,8 +105,9 @@ public class DbQueryServlet extends HttpServlet
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
+    protected void doPost(
+            HttpServletRequest request, 
+            HttpServletResponse response) throws ServletException, IOException
     {
         processRequest(request, response);
     }
@@ -113,5 +121,6 @@ public class DbQueryServlet extends HttpServlet
     public String getServletInfo()
     {
         return "Short description";
-    }// </editor-fold>
+    }
+    // </editor-fold>
 }

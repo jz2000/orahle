@@ -1,23 +1,23 @@
 package org.jz.orahle;
 
-
-
 /**
  *
  * @author sergey.zheznyakovskiy - 2013-11-07
  */
 public class DbObject
 {
-    public String type;
-    public String owner;
-    public String name;
-    public String comment;
+    private String type;
+    private String owner;
+    private String name;
+    private String comment;
 
-    public String getOwner() {
+    public String getOwner() 
+    {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(String owner) 
+    {
         this.owner = owner;
     }
 

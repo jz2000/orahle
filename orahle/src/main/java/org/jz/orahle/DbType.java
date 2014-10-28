@@ -7,18 +7,22 @@ import java.util.List;
  *
  * @author sergey.zheznyakovskiy
  */
-public class DbType extends SessionResolver {
+public class DbType extends SessionResolver 
+{
     private String typeName;
 
-    public String getTypeName() {
+    public String getTypeName() 
+    {
         return typeName;
     }
 
-    public void setTypeName(String typeName) {
+    public void setTypeName(String typeName) 
+    {
         this.typeName = typeName;
     }
 
-    public String getTypeDefinition() {
+    public String getTypeDefinition() 
+    {
         try 
         {
             List<String> source = this.getDbSession().getTypeDefinition(this.getDbOwner(), this.typeName);
@@ -31,13 +35,14 @@ public class DbType extends SessionResolver {
             stringBuilder.append("</pre>");
             return stringBuilder.toString();
         } 
-        catch(SQLException ex) 
+        catch (SQLException ex) 
         {
             return "<font color='red'>Error reading type definition</font>";
         }
     }
 
-    public String getTypeBody() {
+    public String getTypeBody() 
+    {
         try 
         {
             List<String> source = this.getDbSession().getTypeBody(this.getDbOwner(), this.typeName);
@@ -50,7 +55,7 @@ public class DbType extends SessionResolver {
             stringBuilder.append("</pre>");
             return stringBuilder.toString();
         } 
-        catch(SQLException ex) 
+        catch (SQLException ex) 
         {
             return "<font color='red'>Error reading type body</font>";
         }

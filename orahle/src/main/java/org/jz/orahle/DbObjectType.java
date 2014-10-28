@@ -1,7 +1,5 @@
 package org.jz.orahle;
 
-
-
 /**
  *
  * @author sergey.zheznyakovskiy - 2013-11-05
@@ -13,7 +11,10 @@ public class DbObjectType
     private String pageName;
     
 
-    public DbObjectType(String typeLabel, String typeName, String pageName)
+    public DbObjectType(
+            String typeLabel, 
+            String typeName, 
+            String pageName)
     {
         this.typeLabel = typeLabel;
         this.typeName = typeName;

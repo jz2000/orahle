@@ -7,18 +7,22 @@ import java.util.List;
  *
  * @author sergey.zheznyakovskiy
  */
-public class DbProcedure extends SessionResolver {
+public class DbProcedure extends SessionResolver 
+{
     private String procedureName;
 
-    public String getProcedureName() {
+    public String getProcedureName() 
+    {
         return procedureName;
     }
 
-    public void setProcedureName(String procedureName) {
+    public void setProcedureName(String procedureName) 
+    {
         this.procedureName = procedureName;
     }
 
-    public String getProcedureBody() {
+    public String getProcedureBody() 
+    {
         try 
         {
             List<String> source = this.getDbSession().getProcedureBody(this.getDbOwner(), this.procedureName);
@@ -31,7 +35,7 @@ public class DbProcedure extends SessionResolver {
             stringBuilder.append("</pre>");
             return stringBuilder.toString();
         } 
-        catch(SQLException ex) 
+        catch (SQLException ex) 
         {
             return "<font color='red'>Error reading procedure body</font>";
         }

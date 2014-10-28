@@ -1,7 +1,5 @@
 package org.jz.orahle;
 
-
-
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -42,7 +40,8 @@ public class OracleDbSession implements DbSession
             {
                 try (ResultSet rs = stmt.executeQuery())
                 {
-                    if (!rs.next()) {
+                    if (!rs.next()) 
+                    {
                         throw new Exception("Cannot execute the validation query");
                     }
                 }
@@ -55,11 +54,16 @@ public class OracleDbSession implements DbSession
             String typeName, 
             String owner) throws SQLException
     {
-        String QUERY = "select * from ALL_OBJECTS where (OBJECT_TYPE = ?) and (OWNER = ?) order by OBJECT_NAME";
+        String query = 
+                "select * "
+                + "from ALL_OBJECTS "
+                + "where (OBJECT_TYPE = ?) "
+                + "and (OWNER = ?) "
+                + "order by OBJECT_NAME";
         List<DbObject> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) 
         {
-            try (CallableStatement stmt = connection.prepareCall(QUERY)) 
+            try (CallableStatement stmt = connection.prepareCall(query)) 
             {
                 stmt.setString(1, typeName.toUpperCase(Locale.getDefault()));
                 stmt.setString(2, owner.toUpperCase(Locale.getDefault()));
@@ -92,11 +96,17 @@ public class OracleDbSession implements DbSession
         }
         else 
         {
-            String QUERY = "select * from ALL_OBJECTS where (OBJECT_TYPE = ?) and (OWNER = ?) and (OBJECT_NAME like ?) order by OBJECT_NAME";
+            String query = 
+                    "select * "
+                    + "from ALL_OBJECTS "
+                    + "where (OBJECT_TYPE = ?) "
+                    + "and (OWNER = ?) "
+                    + "and (OBJECT_NAME like ?) "
+                    + "order by OBJECT_NAME";
             List<DbObject> result = new ArrayList<>();
             try (Connection connection = dataSource.getConnection()) 
             {
-                try (CallableStatement stmt = connection.prepareCall(QUERY)) 
+                try (CallableStatement stmt = connection.prepareCall(query)) 
                 {
                     stmt.setString(1, typeName.toUpperCase(Locale.getDefault()));
                     stmt.setString(2, owner.toUpperCase(Locale.getDefault()));
@@ -126,12 +136,14 @@ public class OracleDbSession implements DbSession
     }
 
     @Override
-    public List<DbObject> getTables() throws Exception {
+    public List<DbObject> getTables() throws Exception 
+    {
         return searchObjects("TABLE", "", null);
     }
 
     @Override
-    public QueryResult executeQuery(String queryText) throws Exception {
+    public QueryResult executeQuery(String queryText) throws Exception 
+    {
             try (Connection connection = dataSource.getConnection()) 
             {
                 try (CallableStatement stmt = connection.prepareCall(queryText)) 
@@ -175,7 +187,7 @@ public class OracleDbSession implements DbSession
                         return result;
                     }
                 } 
-                catch(SQLException ex) 
+                catch (SQLException ex) 
                 {
                     QueryResult result = new QueryResult();
                     result.setType(QueryResult.Type.ERROR);
@@ -188,10 +200,14 @@ public class OracleDbSession implements DbSession
     @Override
     public List<String> getViewBody(
             String owner,
-            String viewName
-    ) throws SQLException {
+            String viewName) throws SQLException 
+    {
         List<String> result = new ArrayList<>();
-        String sql = "select * from ALL_VIEWS where (OWNER = ?) and (VIEW_NAME = ?)";
+        String sql = 
+                "select * "
+                + "from ALL_VIEWS "
+                + "where (OWNER = ?) "
+                + "and (VIEW_NAME = ?)";
         try (Connection connection = dataSource.getConnection()) 
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
@@ -214,10 +230,16 @@ public class OracleDbSession implements DbSession
     @Override
     public List<String> getProcedureBody(
             String owner,
-            String procedureName
-    ) throws SQLException {
+            String procedureName) throws SQLException 
+    {
         List<String> result = new ArrayList<>();
-        String sql = "select * from ALL_SOURCE where (TYPE = 'PROCEDURE') and (OWNER = ?) and (NAME = ?) order by LINE";
+        String sql = 
+                "select * "
+                + "from ALL_SOURCE "
+                + "where (TYPE = 'PROCEDURE') "
+                + "and (OWNER = ?) "
+                + "and (NAME = ?) "
+                + "order by LINE";
         try (Connection connection = dataSource.getConnection()) 
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
@@ -240,10 +262,16 @@ public class OracleDbSession implements DbSession
     @Override
     public List<String> getFunctionBody(
             String owner,
-            String functionName
-    ) throws SQLException {
+            String functionName) throws SQLException 
+    {
         List<String> result = new ArrayList<>();
-        String sql = "select * from ALL_SOURCE where (TYPE = 'FUNCTION') and (OWNER = ?) and (NAME = ?) order by LINE";
+        String sql = 
+                "select * "
+                + "from ALL_SOURCE "
+                + "where (TYPE = 'FUNCTION') "
+                + "and (OWNER = ?) "
+                + "and (NAME = ?) "
+                + "order by LINE";
         try (Connection connection = dataSource.getConnection()) 
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
@@ -266,10 +294,16 @@ public class OracleDbSession implements DbSession
     @Override
     public List<String> getTriggerBody(
             String owner,
-            String triggerName
-    ) throws SQLException {
+            String triggerName) throws SQLException 
+    {
         List<String> result = new ArrayList<>();
-        String sql = "select * from ALL_SOURCE where (TYPE = 'TRIGGER') and (OWNER = ?) and (NAME = ?) order by LINE";
+        String sql = 
+                "select * "
+                + "from ALL_SOURCE "
+                + "where (TYPE = 'TRIGGER') "
+                + "and (OWNER = ?) "
+                + "and (NAME = ?) "
+                + "order by LINE";
         try (Connection connection = dataSource.getConnection()) 
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
@@ -292,10 +326,16 @@ public class OracleDbSession implements DbSession
     @Override
     public List<String> getTypeDefinition(
             String owner,
-            String typeName
-    ) throws SQLException {
+            String typeName) throws SQLException 
+    {
         List<String> result = new ArrayList<>();
-        String sql = "select * from ALL_SOURCE where (TYPE = 'TYPE') and (OWNER = ?) and (NAME = ?) order by LINE";
+        String sql = 
+                "select * "
+                + "from ALL_SOURCE "
+                + "where (TYPE = 'TYPE') "
+                + "and (OWNER = ?) "
+                + "and (NAME = ?) "
+                + "order by LINE";
         try (Connection connection = dataSource.getConnection()) 
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
@@ -318,10 +358,16 @@ public class OracleDbSession implements DbSession
     @Override
     public List<String> getTypeBody(
             String owner,
-            String packageName
-    ) throws SQLException {
+            String packageName) throws SQLException 
+    {
         List<String> result = new ArrayList<>();
-        String sql = "select * from ALL_SOURCE where (TYPE = 'TYPE BODY') and (OWNER = ?) and (NAME = ?) order by LINE";
+        String sql = 
+                "select * "
+                + "from ALL_SOURCE "
+                + "where (TYPE = 'TYPE BODY') "
+                + "and (OWNER = ?) "
+                + "and (NAME = ?) "
+                + "order by LINE";
         try (Connection connection = dataSource.getConnection()) 
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
@@ -344,10 +390,16 @@ public class OracleDbSession implements DbSession
     @Override
     public List<String> getPackageBody(
             String owner,
-            String packageName
-    ) throws SQLException {
+            String packageName) throws SQLException 
+    {
         List<String> result = new ArrayList<>();
-        String sql = "select * from ALL_SOURCE where (TYPE = 'PACKAGE BODY') and (OWNER = ?) and (NAME = ?) order by LINE";
+        String sql = 
+                "select * "
+                + "from ALL_SOURCE "
+                + "where (TYPE = 'PACKAGE BODY') "
+                + "and (OWNER = ?) "
+                + "and (NAME = ?) "
+                + "order by LINE";
         try (Connection connection = dataSource.getConnection()) 
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
@@ -370,10 +422,16 @@ public class OracleDbSession implements DbSession
     @Override
     public List<String> getPackageDefinition(
             String owner,
-            String packageName
-    ) throws SQLException {
+            String packageName) throws SQLException 
+    {
         List<String> result = new ArrayList<>();
-        String sql = "select * from ALL_SOURCE where (TYPE = 'PACKAGE') and (OWNER = ?) and (NAME = ?) order by LINE";
+        String sql = 
+                "select * "
+                + "from ALL_SOURCE "
+                + "where (TYPE = 'PACKAGE') "
+                + "and (OWNER = ?) "
+                + "and (NAME = ?) "
+                + "order by LINE";
         try (Connection connection = dataSource.getConnection()) 
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
@@ -398,7 +456,8 @@ public class OracleDbSession implements DbSession
             String owner, 
             String tableName) throws SQLException 
     {
-        String sql = "select * "
+        String sql =
+                "select * "
                 + "from ALL_TABLES at "
                 + "inner join ALL_TAB_COMMENTS atc on ((atc.OWNER = at.OWNER) and (atc.TABLE_NAME = at.TABLE_NAME)) "
                 + "where "
@@ -418,7 +477,9 @@ public class OracleDbSession implements DbSession
                         DbTableDefinition result = new DbTableDefinition();
                         result.setRowCount(rs.getInt("NUM_ROWS"));
                         return result;
-                    } else {
+                    } 
+                    else 
+                    {
                         throw new SQLException("Cannot read the table definition");
                     }
                     
@@ -435,8 +496,12 @@ public class OracleDbSession implements DbSession
         List<DbTableColumn> result = new ArrayList<>();
         String sql = "select * "
                 + "from ALL_TAB_COLS atc "
-                + "inner join ALL_COL_COMMENTS acc on ((atc.OWNER = acc.OWNER) and (atc.TABLE_NAME = acc.TABLE_NAME) and (atc.COLUMN_NAME = acc.COLUMN_NAME))"
-                + " where "
+                + "inner join ALL_COL_COMMENTS acc on ("
+                + "    (atc.OWNER = acc.OWNER) "
+                + "    and (atc.TABLE_NAME = acc.TABLE_NAME) "
+                + "    and (atc.COLUMN_NAME = acc.COLUMN_NAME)"
+                + ") "
+                + "where "
                 + "(atc.OWNER = ?) "
                 + "and "
                 + "(atc.TABLE_NAME = ?) "
@@ -476,7 +541,11 @@ public class OracleDbSession implements DbSession
             String tableName) throws SQLException 
     {
         List<DbTableIndex> result = new ArrayList<>();
-        String sql = "select * from ALL_INDEXES where (OWNER = ?) and (TABLE_NAME = ?)";
+        String sql = 
+                "select * "
+                + "from ALL_INDEXES "
+                + "where (OWNER = ?) "
+                + "and (TABLE_NAME = ?)";
         try (Connection connection = dataSource.getConnection()) 
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
@@ -505,7 +574,11 @@ public class OracleDbSession implements DbSession
             String tableName) throws SQLException 
     {
         List<DbTableConstraint> result = new ArrayList<>();
-        String sql = "select * from ALL_CONSTRAINTS where (OWNER = ?) and (TABLE_NAME = ?)";
+        String sql = 
+                "select * "
+                + "from ALL_CONSTRAINTS "
+                + "where (OWNER = ?) "
+                + "and (TABLE_NAME = ?)";
         try (Connection connection = dataSource.getConnection()) 
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
@@ -543,7 +616,8 @@ public class OracleDbSession implements DbSession
         return Collections.emptyList();
     }
 
-    public String getAlias() {
+    public String getAlias() 
+    {
         return alias;
     }
 }

@@ -42,31 +42,38 @@ public class SessionResolver
         return dbSession;
     }
 
-    public String getDbOwner() {
+    public String getDbOwner()
+    {
         return dbOwner;
     }
 
-    public void setDbOwner(String dbOwner) {
+    public void setDbOwner(String dbOwner)
+    {
         this.dbOwner = dbOwner;
     }
 
-    public String getDbObjectType() {
+    public String getDbObjectType()
+    {
         return dbObjectType;
     }
 
-    public void setDbObjectType(String dbObjectType) {
+    public void setDbObjectType(String dbObjectType)
+    {
         this.dbObjectType = dbObjectType;
     }
 
-    public String getDbObjectNameFilter() {
+    public String getDbObjectNameFilter() 
+    {
         return dbObjectNameFilter;
     }
 
-    public void setDbObjectNameFilter(String dbObjectNameFilter) {
+    public void setDbObjectNameFilter(String dbObjectNameFilter)
+    {
         this.dbObjectNameFilter = dbObjectNameFilter;
     }
     
-    public List<DbObject> getTables() throws Exception {
+    public List<DbObject> getTables() throws Exception
+    {
         return getDbSession().searchObjects(this.getDbObjectType(), this.getDbOwner(), this.getDbObjectNameFilter());
     }
 

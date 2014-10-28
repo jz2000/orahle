@@ -31,29 +31,29 @@ public class QueryRunner extends SessionResolver
         QueryResult result = this.getDbSession().executeQuery(this.queryText);
         if (result.getType() == QueryResult.Type.ROWSET) 
         {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<table border>");
-        sb.append("<tr>");
-        for (String colName : result.getNames()) 
-        {
-            sb.append("<th>");
-            sb.append(colName);
-            sb.append("</th>");
-        }
-        sb.append("</tr>");
-        for (List<Object> row : result.getRows()) 
-        {
+            StringBuilder sb = new StringBuilder();
+            sb.append("<table border>");
             sb.append("<tr>");
-            for (Object colValue : row) 
+            for (String colName : result.getNames()) 
             {
-                sb.append("<td>");
-                sb.append(colValue);
-                sb.append("</td>");
+                sb.append("<th>");
+                sb.append(colName);
+                sb.append("</th>");
             }
             sb.append("</tr>");
-        }
-        sb.append("</table>");
-        return sb.toString();
+            for (List<Object> row : result.getRows()) 
+            {
+                sb.append("<tr>");
+                for (Object colValue : row) 
+                {
+                    sb.append("<td>");
+                    sb.append(colValue);
+                    sb.append("</td>");
+                }
+                sb.append("</tr>");
+            }
+            sb.append("</table>");
+            return sb.toString();
         }
         else if (result.getType() == QueryResult.Type.COUNT) 
         {
