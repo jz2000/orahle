@@ -278,7 +278,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.1</version>
+                    <version>3.2</version>
                     <!-- compile for Java 1.7 -->
                     <configuration>
                         <source>1.7</source>
@@ -295,7 +295,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.10</version>
+                    <version>2.13</version>
                     <configuration>
                         <configLocation>orahle_checkstyle.xml</configLocation>
                         <consoleOutput>false</consoleOutput>
@@ -305,7 +305,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>findbugs-maven-plugin</artifactId>
-                    <version>2.4.0</version>
+                    <version>3.0.0</version>
                     <configuration>
                         <xmlOutput>true</xmlOutput>
                         <xmlOutputDirectory>target/site</xmlOutputDirectory>
@@ -316,7 +316,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-pmd-plugin</artifactId>
-                    <version>2.7.1</version>
+                    <version>3.2</version>
                     <configuration>
                         <targetJdk>1.7</targetJdk>
                     </configuration>
