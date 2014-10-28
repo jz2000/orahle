@@ -21,6 +21,8 @@ import org.jz.orahle.DebuggingDbSession;
 public class DbQueryServlet extends HttpServlet
 {
 
+    private static final long serialVersionUID = 01L;
+
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -63,7 +65,7 @@ public class DbQueryServlet extends HttpServlet
                         session.setAttribute("activeSessions", activeSessions);
                     }
                     activeSessions.put(dbAlias, dbSession);
-                    response.sendRedirect("db-welcome.jspx?db-alias=" + dbAlias);
+                    response.sendRedirect("db-welcome.jspx?db-alias=" + dbConnection.getAlias());
                 }
             }
         }

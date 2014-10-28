@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class DbConnection implements Serializable
 {
+    private static final long serialVersionUID = 01L;
+
     private String user;
     private String alias;
     private String url;

@@ -1,5 +1,6 @@
 package org.jz.orahle;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class DbPackage extends SessionResolver {
             stringBuilder.append("</pre>");
             return stringBuilder.toString();
         } 
-        catch(Exception ex) 
+        catch(SQLException ex) 
         {
             return "<font color='red'>Error reading package definition</font>";
         }
@@ -49,7 +50,7 @@ public class DbPackage extends SessionResolver {
             stringBuilder.append("</pre>");
             return stringBuilder.toString();
         } 
-        catch(Exception ex) 
+        catch(SQLException ex) 
         {
             return "<font color='red'>Error reading package body</font>";
         }

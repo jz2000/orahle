@@ -21,6 +21,8 @@ import org.jz.orahle.OracleDbSession;
 public class DbConnectServlet extends HttpServlet
 {
 
+    private static final long serialVersionUID = 01L;
+    
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -39,7 +41,6 @@ public class DbConnectServlet extends HttpServlet
         {
             String dbAlias = request.getParameter("dbalias");
             String userName = request.getParameter("username");
-            String dbOwner = userName;
             String userPassword = request.getParameter("password");
             HttpSession session = request.getSession();
             ConnectionServiceImpl connectionService = (ConnectionServiceImpl)session.getAttribute("connectionList");
@@ -68,7 +69,8 @@ public class DbConnectServlet extends HttpServlet
                         session.setAttribute("activeSessions", activeSessions);
                     }
                     activeSessions.put(dbAlias, dbSession);
-                    response.sendRedirect("db-welcome.jspx?db-alias=" + dbAlias + "&" + "db-owner=" + dbOwner);
+                    String dbOwner = dbConnection.getUser();
+                    response.sendRedirect("db-welcome.jspx?db-alias=" + dbConnection.getAlias() + "&" + "db-owner=" + dbOwner);
                 }
             }
         }

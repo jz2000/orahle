@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -19,9 +20,9 @@ import org.xml.sax.SAXException;
 
 public class ConnectionServiceImpl implements Serializable {
 
-    //data model
+    private static final long serialVersionUID = 01L;
+    
     private List<DbConnection> connectionList = new ArrayList<>();
-    //initialize book data
     
     public ConnectionServiceImpl() throws IOException, ParserConfigurationException, SAXException 
     {
@@ -62,6 +63,9 @@ public class ConnectionServiceImpl implements Serializable {
                             case "description" :
                                 dbConnection.setDescription(paramNode.getTextContent());
                                 break;
+                            default :
+                                /* It's OK, just an unsupported field */
+                                break;
                         }
                     }
                 }
@@ -93,8 +97,8 @@ public class ConnectionServiceImpl implements Serializable {
         {
             for (DbConnection c : connectionList)
             {
-                if (c.getAlias().toLowerCase().contains(keyword.toLowerCase())
-                        || c.getUrl().toLowerCase().contains(keyword.toLowerCase()))
+                if (c.getAlias().toLowerCase(Locale.getDefault()).contains(keyword.toLowerCase(Locale.getDefault()))
+                        || c.getUrl().toLowerCase(Locale.getDefault()).contains(keyword.toLowerCase(Locale.getDefault())))
                 {
                     result.add(c);
                 }

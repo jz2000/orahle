@@ -55,7 +55,7 @@ public class DbTable extends SessionResolver {
             stringBuilder.append("</pre>");
             return stringBuilder.toString();
         } 
-        catch(Exception ex) 
+        catch(SQLException ex) 
         {
             return "<font color='red'>Error reading tableSql</font>";
         }

@@ -1,5 +1,6 @@
 package org.jz.orahle;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ public class SessionResolver
     private String dbOwner;
     private String dbObjectType;
     private String dbObjectNameFilter;
-    private Map<String, DbSession> sessions;
+    private Map<String, DbSession> sessions = new HashMap<>();
 
     public String getDbAlias()
     {

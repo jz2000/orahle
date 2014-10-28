@@ -5,6 +5,7 @@ package org.jz.orahle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  *
@@ -36,14 +37,14 @@ public class DatabaseServiceDebugImpl implements DatabaseService
     {
         if ((keyword == null) || keyword.trim().isEmpty())
         {
-            return new ArrayList<DbObjectType>(knownObjectTypes);
+            return new ArrayList<>(knownObjectTypes);
         } 
         else
         {
-            List<DbObjectType> result = new ArrayList<DbObjectType>();
+            List<DbObjectType> result = new ArrayList<>();
             for (DbObjectType objectType : knownObjectTypes) 
             {
-                if (objectType.getTypeLabel().toLowerCase().contains(keyword.toLowerCase()))
+                if (objectType.getTypeLabel().toLowerCase(Locale.getDefault()).contains(keyword.toLowerCase(Locale.getDefault())))
                 {
                     result.add(objectType);
                 }

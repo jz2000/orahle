@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import org.apache.commons.dbcp.BasicDataSource;
 /**
  *
@@ -60,8 +61,8 @@ public class OracleDbSession implements DbSession
         {
             try (CallableStatement stmt = connection.prepareCall(QUERY)) 
             {
-                stmt.setString(1, typeName.toUpperCase());
-                stmt.setString(2, owner.toUpperCase());
+                stmt.setString(1, typeName.toUpperCase(Locale.getDefault()));
+                stmt.setString(2, owner.toUpperCase(Locale.getDefault()));
                 try (ResultSet rs = stmt.executeQuery())
                 {
                     while (rs.next()) 
@@ -97,9 +98,9 @@ public class OracleDbSession implements DbSession
             {
                 try (CallableStatement stmt = connection.prepareCall(QUERY)) 
                 {
-                    stmt.setString(1, typeName.toUpperCase());
-                    stmt.setString(2, owner.toUpperCase());
-                    stmt.setString(3, keyword.toUpperCase());
+                    stmt.setString(1, typeName.toUpperCase(Locale.getDefault()));
+                    stmt.setString(2, owner.toUpperCase(Locale.getDefault()));
+                    stmt.setString(3, keyword.toUpperCase(Locale.getDefault()));
                     try (ResultSet rs = stmt.executeQuery())
                     {
                         while (rs.next()) 
@@ -195,8 +196,8 @@ public class OracleDbSession implements DbSession
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
             {
-                stmt.setString(1, owner.toUpperCase());
-                stmt.setString(2, viewName.toUpperCase());
+                stmt.setString(1, owner.toUpperCase(Locale.getDefault()));
+                stmt.setString(2, viewName.toUpperCase(Locale.getDefault()));
                 try (ResultSet rs = stmt.executeQuery())
                 {
                     while (rs.next()) 
@@ -221,8 +222,8 @@ public class OracleDbSession implements DbSession
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
             {
-                stmt.setString(1, owner.toUpperCase());
-                stmt.setString(2, procedureName.toUpperCase());
+                stmt.setString(1, owner.toUpperCase(Locale.getDefault()));
+                stmt.setString(2, procedureName.toUpperCase(Locale.getDefault()));
                 try (ResultSet rs = stmt.executeQuery())
                 {
                     while (rs.next()) 
@@ -247,8 +248,8 @@ public class OracleDbSession implements DbSession
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
             {
-                stmt.setString(1, owner.toUpperCase());
-                stmt.setString(2, functionName.toUpperCase());
+                stmt.setString(1, owner.toUpperCase(Locale.getDefault()));
+                stmt.setString(2, functionName.toUpperCase(Locale.getDefault()));
                 try (ResultSet rs = stmt.executeQuery())
                 {
                     while (rs.next()) 
@@ -273,8 +274,8 @@ public class OracleDbSession implements DbSession
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
             {
-                stmt.setString(1, owner.toUpperCase());
-                stmt.setString(2, triggerName.toUpperCase());
+                stmt.setString(1, owner.toUpperCase(Locale.getDefault()));
+                stmt.setString(2, triggerName.toUpperCase(Locale.getDefault()));
                 try (ResultSet rs = stmt.executeQuery())
                 {
                     while (rs.next()) 
@@ -299,8 +300,8 @@ public class OracleDbSession implements DbSession
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
             {
-                stmt.setString(1, owner.toUpperCase());
-                stmt.setString(2, typeName.toUpperCase());
+                stmt.setString(1, owner.toUpperCase(Locale.getDefault()));
+                stmt.setString(2, typeName.toUpperCase(Locale.getDefault()));
                 try (ResultSet rs = stmt.executeQuery())
                 {
                     while (rs.next()) 
@@ -325,8 +326,8 @@ public class OracleDbSession implements DbSession
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
             {
-                stmt.setString(1, owner.toUpperCase());
-                stmt.setString(2, packageName.toUpperCase());
+                stmt.setString(1, owner.toUpperCase(Locale.getDefault()));
+                stmt.setString(2, packageName.toUpperCase(Locale.getDefault()));
                 try (ResultSet rs = stmt.executeQuery())
                 {
                     while (rs.next()) 
@@ -351,8 +352,8 @@ public class OracleDbSession implements DbSession
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
             {
-                stmt.setString(1, owner.toUpperCase());
-                stmt.setString(2, packageName.toUpperCase());
+                stmt.setString(1, owner.toUpperCase(Locale.getDefault()));
+                stmt.setString(2, packageName.toUpperCase(Locale.getDefault()));
                 try (ResultSet rs = stmt.executeQuery())
                 {
                     while (rs.next()) 
@@ -377,8 +378,8 @@ public class OracleDbSession implements DbSession
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
             {
-                stmt.setString(1, owner.toUpperCase());
-                stmt.setString(2, packageName.toUpperCase());
+                stmt.setString(1, owner.toUpperCase(Locale.getDefault()));
+                stmt.setString(2, packageName.toUpperCase(Locale.getDefault()));
                 try (ResultSet rs = stmt.executeQuery())
                 {
                     while (rs.next()) 
@@ -408,8 +409,8 @@ public class OracleDbSession implements DbSession
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
             {
-                stmt.setString(1, owner.toUpperCase());
-                stmt.setString(2, tableName.toUpperCase());
+                stmt.setString(1, owner.toUpperCase(Locale.getDefault()));
+                stmt.setString(2, tableName.toUpperCase(Locale.getDefault()));
                 try (ResultSet rs = stmt.executeQuery())
                 {
                     if (rs.next()) 
@@ -445,8 +446,8 @@ public class OracleDbSession implements DbSession
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
             {
-                stmt.setString(1, owner.toUpperCase());
-                stmt.setString(2, tableName.toUpperCase());
+                stmt.setString(1, owner.toUpperCase(Locale.getDefault()));
+                stmt.setString(2, tableName.toUpperCase(Locale.getDefault()));
                 try (ResultSet rs = stmt.executeQuery())
                 {
                     while (rs.next()) 
@@ -480,8 +481,8 @@ public class OracleDbSession implements DbSession
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
             {
-                stmt.setString(1, owner.toUpperCase());
-                stmt.setString(2, tableName.toUpperCase());
+                stmt.setString(1, owner.toUpperCase(Locale.getDefault()));
+                stmt.setString(2, tableName.toUpperCase(Locale.getDefault()));
                 try (ResultSet rs = stmt.executeQuery())
                 {
                     while (rs.next()) 
@@ -509,8 +510,8 @@ public class OracleDbSession implements DbSession
         {
             try (CallableStatement stmt = connection.prepareCall(sql)) 
             {
-                stmt.setString(1, owner.toUpperCase());
-                stmt.setString(2, tableName.toUpperCase());
+                stmt.setString(1, owner.toUpperCase(Locale.getDefault()));
+                stmt.setString(2, tableName.toUpperCase(Locale.getDefault()));
                 try (ResultSet rs = stmt.executeQuery())
                 {
                     while (rs.next()) 
