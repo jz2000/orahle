@@ -21,16 +21,15 @@ public class ConnectionServiceImpl implements Serializable {
 
     //data model
     private List<DbConnection> connectionList = new ArrayList<>();
-    private static int id = 1;
     //initialize book data
     
     public ConnectionServiceImpl() throws IOException, ParserConfigurationException, SAXException 
     {
-        File connectionsFile = new File(System.getProperty("orahle.connections-file", "orahle-connections.xml"));
+        File connectionsFile = new File(System.getProperty("orahle.connections-file", "conf/orahle-connections.xml"));
             
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-	Document doc = dBuilder.parse("conf/orahle-connections.xml");
+	Document doc = dBuilder.parse(connectionsFile);
  
 	//optional, but recommended
 	//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work

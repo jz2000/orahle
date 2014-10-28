@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.jz.orahle.ConnectionServiceImpl;
 import org.jz.orahle.DbConnection;
 import org.jz.orahle.DbSession;
-import org.jz.orahle.DebuggingDbSession;
 import org.jz.orahle.OracleDbSession;
 
 /**

@@ -4,9 +4,7 @@ package org.jz.orahle;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -19,6 +17,7 @@ public class DebuggingDbSession implements DbSession
     private final String password;
     
     private final List<DbObject> objects = new ArrayList<>();
+    private final String url;
     
     public DebuggingDbSession(
             String alias, 
@@ -27,6 +26,7 @@ public class DebuggingDbSession implements DbSession
             String password)
     {
         this.alias = alias;
+        this.url = url;
         this.userName = userName;
         this.password = password;
     }
@@ -210,5 +210,12 @@ public class DebuggingDbSession implements DbSession
     public List<String> getTableSql(String owner, String tableName) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public String getUrl() {
+        return url;
+    }
 }

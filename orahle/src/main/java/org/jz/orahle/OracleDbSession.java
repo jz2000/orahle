@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import org.apache.commons.dbcp.BasicDataSource;
 /**
  *
@@ -42,7 +41,9 @@ public class OracleDbSession implements DbSession
             {
                 try (ResultSet rs = stmt.executeQuery())
                 {
-                    rs.next();
+                    if (!rs.next()) {
+                        throw new Exception("Cannot execute the validation query");
+                    }
                 }
             }
         }
@@ -541,4 +542,7 @@ public class OracleDbSession implements DbSession
         return Collections.emptyList();
     }
 
+    public String getAlias() {
+        return alias;
+    }
 }
