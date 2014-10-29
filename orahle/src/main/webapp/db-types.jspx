@@ -7,6 +7,7 @@
 <jsp:root 
     xmlns:c="http://java.sun.com/jsp/jstl/core" 
     xmlns:jsp="http://java.sun.com/JSP/Page" 
+    xmlns:t="urn:jsptagdir:/WEB-INF/tags/" 
     version="2.0">
 
     <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
@@ -22,43 +23,46 @@
     <jsp:setProperty name="sessionResolver" property="dbObjectNameFilter" param="db-obj-name-filter"/>
     <jsp:setProperty name="sessionResolver" property="sessions" value="${sessionScope.activeSessions}"/>
     <!-- any content can be specified here, e.g.: -->
-    <jsp:element name="crumbs">
-        <a href="/orahle/db-list.jspx">db-list</a>
-        -->
-        <a href="/orahle/db-welcome.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}">db-schema</a> 
-        -->
-        types
-    </jsp:element>    
-    <jsp:element name="text">
-        <jsp:attribute name="lang">EN</jsp:attribute>
-        <jsp:body>
-        <h1>Database Types</h1>
-        <form method="GET">
-            Owner:
-            <input type="hidden" name="db-alias" value="${sessionResolver.dbAlias}"/>
-            <input type="hidden" name="db-obj-type" value="${sessionResolver.dbObjectType}"/>
-            <input type="text" name="db-owner" value="${sessionResolver.dbOwner}"/>
-            <input type="text" name="db-obj-name-filter" value="${sessionResolver.dbObjectNameFilter}"/>
-            <input type="submit" name="submit" value="Filter"/>
-        </form>    
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Comment</th>
-                <th></th>
-            </tr>
-            <c:forEach var="dbType" items='${sessionResolver.tables}'>
-            <tr>
-                <td>${dbType.name}</td>
-                <td>${dbType.comment}</td>
-                <td><a href="db-type-definition.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;type-name=${dbType.name}">Definition....</a></td>
-                <td>|</td>
-                <td><a href="db-type-body.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;type-name=${dbType.name}">Body....</a></td>
-            </tr>
-            </c:forEach>
-        </table>
-        
-        </jsp:body>
-    </jsp:element>
+    <t:wrapper title="Types" caption="Database Types">
+
+        <jsp:attribute name="crumbs">
+            <a href="/orahle/db-list.jspx">db-list</a>
+            -->
+            <a href="/orahle/db-welcome.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}">db-schema</a> 
+            -->
+            types
+        </jsp:attribute>    
+            
+        <jsp:element name="text">
+            <jsp:attribute name="lang">EN</jsp:attribute>
+            <jsp:body>
+            <form method="GET">
+                Owner:
+                <input type="hidden" name="db-alias" value="${sessionResolver.dbAlias}"/>
+                <input type="hidden" name="db-obj-type" value="${sessionResolver.dbObjectType}"/>
+                <input type="text" name="db-owner" value="${sessionResolver.dbOwner}"/>
+                <input type="text" name="db-obj-name-filter" value="${sessionResolver.dbObjectNameFilter}"/>
+                <input type="submit" name="submit" value="Filter"/>
+            </form>    
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Comment</th>
+                    <th></th>
+                </tr>
+                <c:forEach var="dbType" items='${sessionResolver.tables}'>
+                <tr>
+                    <td>${dbType.name}</td>
+                    <td>${dbType.comment}</td>
+                    <td><a href="db-type-definition.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;type-name=${dbType.name}">Definition....</a></td>
+                    <td>|</td>
+                    <td><a href="db-type-body.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;type-name=${dbType.name}">Body....</a></td>
+                </tr>
+                </c:forEach>
+            </table>
+
+            </jsp:body>
+        </jsp:element>
+    </t:wrapper>
 
 </jsp:root>

@@ -4,47 +4,51 @@
     Created on : 21-Nov-2013, 00:15:09
     Author     : jz
 -->
-<jsp:root 
+<jsp:root
     xmlns:c="http://java.sun.com/jsp/jstl/core" 
     xmlns:jsp="http://java.sun.com/JSP/Page" 
+    xmlns:t="urn:jsptagdir:/WEB-INF/tags/" 
     version="2.0">
 
-    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
-    <jsp:useBean 
-        class="org.jz.orahle.ConnectionServiceImpl" 
-        scope="session" 
-        id="connectionList" 
-        type="org.jz.orahle.ConnectionServiceImpl"/>
+        <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
+        <jsp:useBean 
+            class="org.jz.orahle.ConnectionServiceImpl" 
+            scope="session" 
+            id="connectionList" 
+            type="org.jz.orahle.ConnectionServiceImpl"/>
 
     <!-- any content can be specified here, e.g.: -->
-    <jsp:element name="crumbs">
-        <a href="/orahle/db-list.jspx">db-list</a>
-    </jsp:element>    
-    <jsp:element name="text">
-        <jsp:attribute name="lang">EN</jsp:attribute>
-        <jsp:body>
-        <h1>Database List</h1>
-        
-        <table border="1">
-            <tr>
-                <th>Alias</th>
-                <th>URL</th>
-                <th>User Name</th>
-                <th>Description</th>
-                <th></th>
-            </tr>
-            <c:forEach var="dbConnection" items="${connectionList.connections}">
+    <t:wrapper title="DB List" caption="Database List">
+
+        <jsp:attribute name="crumbs">
+            <a href="/orahle/db-list.jspx">db-list</a>
+        </jsp:attribute>    
+
+        <jsp:element name="text">
+            <jsp:attribute name="lang">EN</jsp:attribute>
+            <jsp:body>
+            <table border="1">
                 <tr>
-                    <td>${dbConnection.alias}</td>
-                    <td>${dbConnection.url}</td>
-                    <td>${dbConnection.user}</td>
-                    <td>${dbConnection.description}</td>
-                    <td><a href="db-connect.jspx?db-alias=${dbConnection.alias}">Connect</a></td>
+                    <th>Alias</th>
+                    <th>URL</th>
+                    <th>User Name</th>
+                    <th>Description</th>
+                    <th></th>
                 </tr>
-            </c:forEach>
-        </table>
-        
-        </jsp:body>
-    </jsp:element>
+                <c:forEach var="dbConnection" items="${connectionList.connections}">
+                    <tr>
+                        <td>${dbConnection.alias}</td>
+                        <td>${dbConnection.url}</td>
+                        <td>${dbConnection.user}</td>
+                        <td>${dbConnection.description}</td>
+                        <td><a href="db-connect.jspx?db-alias=${dbConnection.alias}">Connect</a></td>
+                    </tr>
+                </c:forEach>
+            </table>
+
+            </jsp:body>
+        </jsp:element>
+
+    </t:wrapper>    
 
 </jsp:root>

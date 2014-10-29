@@ -4,7 +4,10 @@
     Created on : 21-Nov-2013, 01:32:31
     Author     : jz
 -->
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+<jsp:root 
+    xmlns:jsp="http://java.sun.com/JSP/Page" 
+    xmlns:t="urn:jsptagdir:/WEB-INF/tags/" 
+    version="2.0">
 
     <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
     <jsp:useBean 
@@ -23,25 +26,27 @@
     <!-- TODO: HOW TO PASS a parameter from query string to hidden field -->
     
     <!-- any content can be specified here, e.g.: -->
-    <jsp:element name="crumbs">
-        <a href="/orahle/db-list.jspx">db-list</a>
-    </jsp:element>    
-    <jsp:element name="text">
-        <jsp:attribute name="lang">EN</jsp:attribute>
-        <jsp:body>
-            <h1>Database Connect</h1>
-            
-            <form action="dbconnect" method="post">
-                <input type="hidden" id="dbalias" name="dbalias" value="${dbLogin.dbAlias}"/>  
-                <input type="hidden" id="username" name="username" value="${dbLogin.dbUserName}"/>  
-                <table>
-                    <tr><td><input type="text" id="username-display" name="username-display" value="${dbLogin.dbUserName}" disabled="true"/></td></tr>
-                    <tr><td><input type="password" id="password" name="password"/></td></tr>
-                    <tr><td><button type="submit" value="Connect" name="submit" id="submit" title="Connect">Connect</button></td></tr>
-                    <tr><td><button type="reset" value="Reset" id="reset" name="reset">Reset</button></td></tr>
-                </table>
-            </form>
-        </jsp:body>
-    </jsp:element>
+    <t:wrapper title="DB Connect" caption="Database Connect">
+
+        <jsp:attribute name="crumbs">
+            <a href="/orahle/db-list.jspx">db-list</a>
+        </jsp:attribute>    
+
+        <jsp:element name="text">
+            <jsp:attribute name="lang">EN</jsp:attribute>
+            <jsp:body>
+                <form action="dbconnect" method="post">
+                    <input type="hidden" id="dbalias" name="dbalias" value="${dbLogin.dbAlias}"/>  
+                    <input type="hidden" id="username" name="username" value="${dbLogin.dbUserName}"/>  
+                    <table>
+                        <tr><td><input type="text" id="username-display" name="username-display" value="${dbLogin.dbUserName}" disabled="true"/></td></tr>
+                        <tr><td><input type="password" id="password" name="password"/></td></tr>
+                        <tr><td><button type="submit" value="Connect" name="submit" id="submit" title="Connect">Connect</button></td></tr>
+                        <tr><td><button type="reset" value="Reset" id="reset" name="reset">Reset</button></td></tr>
+                    </table>
+                </form>
+            </jsp:body>
+        </jsp:element>
+    </t:wrapper>
 
 </jsp:root>

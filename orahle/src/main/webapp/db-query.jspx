@@ -7,6 +7,7 @@
 <jsp:root 
     xmlns:c="http://java.sun.com/jsp/jstl/core" 
     xmlns:jsp="http://java.sun.com/JSP/Page" 
+    xmlns:t="urn:jsptagdir:/WEB-INF/tags/" 
     version="2.0">
 
     <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
@@ -30,32 +31,35 @@
     <jsp:setProperty name="queryRunner" property="sessions" value="${sessionScope.activeSessions}"/>
     <jsp:setProperty name="queryRunner" property="queryText" param="db-query"/>
     <!-- any content can be specified here, e.g.: -->
-    <jsp:element name="crumbs">
-        <a href="/orahle/db-list.jspx">db-list</a>
-        -->
-        <a href="/orahle/db-welcome.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}">db-schema</a> 
-        -->
-        query
-    </jsp:element>    
-    <jsp:element name="text">
-        <jsp:attribute name="lang">EN</jsp:attribute>
-        <jsp:body>
-        <h1>Compose Query</h1>
-        <form method="POST">
-            <input type="hidden" name="db-alias" value="${sessionResolver.dbAlias}"/>
-            <input type="hidden" name="db-obj-type" value="${sessionResolver.dbObjectType}"/>
-            Owner: 
-            <input type="text" name="db-owner" value="${sessionResolver.dbOwner}"/>
-            <br/>
-            Query: 
-            <textarea type="textArea" name="db-query" rows="40" cols="80" value="XXX">${queryRunner.queryText}</textarea>
-            <br/>
-            <input type="submit" name="submit" value="Run"/>
-        </form>   
-        <div>
-            ${queryRunner.queryResult}
-        </div>    
-        </jsp:body>
-    </jsp:element>
+    <t:wrapper title="Compose Query" caption="Compose Query">
+
+        <jsp:attribute name="crumbs">
+            <a href="/orahle/db-list.jspx">db-list</a>
+            -->
+            <a href="/orahle/db-welcome.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}">db-schema</a> 
+            -->
+            query
+        </jsp:attribute>    
+            
+        <jsp:element name="text">
+            <jsp:attribute name="lang">EN</jsp:attribute>
+            <jsp:body>
+            <form method="POST">
+                <input type="hidden" name="db-alias" value="${sessionResolver.dbAlias}"/>
+                <input type="hidden" name="db-obj-type" value="${sessionResolver.dbObjectType}"/>
+                Owner: 
+                <input type="text" name="db-owner" value="${sessionResolver.dbOwner}"/>
+                <br/>
+                Query: 
+                <textarea type="textArea" name="db-query" rows="40" cols="80" value="XXX">${queryRunner.queryText}</textarea>
+                <br/>
+                <input type="submit" name="submit" value="Run"/>
+            </form>   
+            <div>
+                ${queryRunner.queryResult}
+            </div>    
+            </jsp:body>
+        </jsp:element>
+    </t:wrapper>
 
 </jsp:root>

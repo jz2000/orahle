@@ -7,6 +7,7 @@
 <jsp:root 
     xmlns:c="http://java.sun.com/jsp/jstl/core" 
     xmlns:jsp="http://java.sun.com/JSP/Page" 
+    xmlns:t="urn:jsptagdir:/WEB-INF/tags/" 
     version="2.0">
 
     <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
@@ -34,26 +35,28 @@
     <jsp:setProperty name="dbTrigger" property="dbObjectNameFilter" param="db-obj-name-filter"/>
     <jsp:setProperty name="dbTrigger" property="sessions" value="${sessionScope.activeSessions}"/>
     <!-- any content can be specified here, e.g.: -->
-    <jsp:element name="crumbs">
-        <a href="/orahle/db-list.jspx">db-list</a>
-        -->
-        <a href="/orahle/db-welcome.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}">db-schema</a> 
-        -->
-        <a href="/orahle/db-triggers.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;db-obj-type=TRIGGER">triggers</a> 
-        -->
-        ${dbTrigger.triggerName}
-    </jsp:element>    
-    <jsp:element name="text">
-        <jsp:attribute name="lang">EN</jsp:attribute>
-        <jsp:body>
+    <t:wrapper title="Trigger [${dbTrigger.triggerName}]" caption="Database Trigger [${dbTrigger.triggerName}]">
 
-            <h1>Database Trigger [${dbTrigger.triggerName}]</h1>
+        <jsp:attribute name="crumbs">
+            <a href="/orahle/db-list.jspx">db-list</a>
+            -->
+            <a href="/orahle/db-welcome.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}">db-schema</a> 
+            -->
+            <a href="/orahle/db-triggers.jspx?db-alias=${sessionResolver.dbAlias}&amp;db-owner=${sessionResolver.dbOwner}&amp;db-obj-type=TRIGGER">triggers</a> 
+            -->
+            ${dbTrigger.triggerName}
+        </jsp:attribute>    
+            
+        <jsp:element name="text">
+            <jsp:attribute name="lang">EN</jsp:attribute>
+            <jsp:body>
 
-            <code>
-                ${dbTrigger.triggerBody}
-            </code>    
-        
-        </jsp:body>
-    </jsp:element>
+                <code>
+                    ${dbTrigger.triggerBody}
+                </code>    
+
+            </jsp:body>
+        </jsp:element>
+    </t:wrapper>
 
 </jsp:root>
