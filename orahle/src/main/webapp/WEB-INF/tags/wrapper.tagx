@@ -1,8 +1,8 @@
-<%@tag description="Simple Wrapping Tag" pageEncoding="UTF-8"%>
-<%@attribute name="title" fragment="false" required="true" %>
-<%@attribute name="caption" fragment="false" required="true" %>
-<%@attribute name="crumbs" fragment="true" required="true" %>
-<html>
+<html xmlns:jsp="http://java.sun.com/JSP/Page">
+<jsp:directive.tag description="Simple Wrapping Tag" pageEncoding="UTF-8" />
+<jsp:directive.attribute name="title"   fragment="false" required="true" />
+<jsp:directive.attribute name="caption" fragment="false" required="true" />
+<jsp:directive.attribute name="crumbs"  fragment="true"  required="true" />
     <head><title>Orahle: ${title}</title></head>
     <body>
         <div id="header" style="font-size: 6px;color: green">
@@ -12,7 +12,7 @@
             <jsp:invoke fragment="crumbs"/>
         </div>
         <div id="caption">
-            <h1>${caption}</h2>
+            <h1>${caption}</h1>
         </div>
         <div id="body">
         <jsp:doBody/>
